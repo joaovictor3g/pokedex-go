@@ -7,6 +7,7 @@ import { Home } from './pages/Home'
 import { PokeList } from './pages/PokeList';
 import { Favorites } from './pages/Favorites';
 import { Profile } from './pages/Profile';
+import { PokemonDetail } from './pages/PokemonDetail';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,6 +23,7 @@ export function Routes(){
                 <Tab.Screen name="/pokelist" component={PokeList} />
                 <Tab.Screen name="/favorites" component={Favorites} />
                 <Tab.Screen name="/profile" component={Profile} />
+                <Tab.Screen name="/pokelist/detail" component={PokemonDetail} />
             </Tab.Navigator>
         </NavigationContainer>
     );

@@ -1,5 +1,9 @@
 import styled from 'styled-components/native';
 
+interface PokemonBoxColor {
+    color: string;
+}
+
 export const Container = styled.View`
     flex: 1;
     align-items: center;
@@ -43,10 +47,10 @@ export const Scroll = styled.ScrollView`
 
 `;
 
-export const PokemonBox = styled.View`
+export const PokemonBox = styled.TouchableOpacity<PokemonBoxColor>`
     width: 32%;
     height: 120px;
-    background:#4DD8B9;
+    background:${props => props.color};
     border-radius: 10px;
     margin: 2px;
     margin-bottom: 50px;
