@@ -217,7 +217,7 @@ export function PokemonDetail(){
     return (
         <>
             <Container>
-                {(name && types.length>0 && serializedTypes.length>0 && colors.length>0 && stats) ?
+                {(name) ?
                 <PokemonView color={colors ? colors[0] : "#ddd"}>
                     <PokemonProfile>
                         <MaterialCommunityIcons 

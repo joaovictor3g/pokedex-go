@@ -127,25 +127,40 @@ export function PokeList() {
         }
     }
 
-    async function getTypes(_id: number) {
-        try{   
+    async function getTypes(_id: number): Promise<{ types: string[]; color: string; } | undefined> {
+        try{  
             const response = await api.get(`/pokemon/${_id}`);
 
             setTypes(response.data.types);                
             setSerializedTypes(types.map((type) => type.type.name)) 
             
             nameTypesAndColors.forEach(item => {
+                if(color!=='')
+                    return;
                 if(item.name===serializedTypes[0]) {
-                    console.log(item.color);
+                    
                     const colorType: string = item.color;
                     setColor(colorType);
-
+                    
                 }
             });
-        
+            return { types:serializedTypes, color: color };
         } catch(err) {
-
+        
         }
+    }
+
+    function getIntermediateTypes(_id: number) {
+        getTypes(1).then(res =>{
+            if(res) {
+                console.log(res);
+                setSerializedTypes(res.types);
+                setColor(res.color);
+                return true;
+            }
+        })
+
+        return false;
     }
 
     function handleNavigateToDetail(id: number) {
@@ -154,7 +169,12 @@ export function PokeList() {
 
     useEffect(() => {
         renderPokemons();
-        getTypes(1);
+        // getTypes(4).then(res => console.log(res));
+        // getTypes(1);
+        [1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => {
+            console.log(num)
+            getTypes(num).then(res => console.log(res))
+        })
     }, [isFocused]);
 
     return (
@@ -172,9 +192,11 @@ export function PokeList() {
                 </GroupButton>
                 <Scroll>
                     <PokemonContainer>
-                        { pokemons && pokemons.map((pokemon: PokemonProps, index: number) => {
+                    { pokemons && pokemons.map((pokemon: PokemonProps, index: number) => {
+                            
                             return(
                                 <PokemonBox key={pokemon.name} color={color ? color: "#666"} onPress={()=>handleNavigateToDetail(index+1)}>
+                                    
                                     <PokemonName>{pokemon.name}</PokemonName>
                                     { serializedTypes.map((serializedType) => (
                                         <View style={{
@@ -190,7 +212,7 @@ export function PokeList() {
                                         >
                                             <IconPerType name={serializedType}/>
                                         </View>
-                                    )) }
+                                    ))}
                                     
                                     { index < 10 && <PokemonImage source={{ uri: `https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/00${index+1}.png`}}/> }
                                     { index >= 10 && index <100 && <PokemonImage source={{ uri: `https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/0${index+1}.png`}}/> }
@@ -207,3 +229,5 @@ export function PokeList() {
         </>
     );
 }
+
+
