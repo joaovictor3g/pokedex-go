@@ -48,18 +48,19 @@ export const Scroll = styled.ScrollView`
 `;
 
 export const PokemonBox = styled.TouchableOpacity<PokemonBoxColor>`
-    width: 32%;
+    width: 150px;
     height: 120px;
     background:${props => props.color};
     border-radius: 10px;
     margin: 2px;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
     padding: 5px;
 `;
 
 export const PokemonName = styled.Text`
     color: #fff;
     font-size: 18px;
+    font-weight: bold;
 `;
 
 export const PokemonImage = styled.Image`

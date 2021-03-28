@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 
 interface NormalTextProps {
-    color: string;
+    color?: string;
     fontSize?: number;
     fontWeight?:boolean;
 };
@@ -15,7 +15,7 @@ export const Container = styled.View`
 `;
 
 export const PokemonView = styled.View<NormalTextProps>`
-    background: ${props=>props.color};
+    background: ${props=>props.color  ? props.color : "#666"};
     width: 100%;
     height: 100%;
     position: relative;
@@ -29,8 +29,8 @@ export const PokemonProfile = styled.View`
 
 export const PokemonInfoBox = styled.View`
     background: #F1f1f0;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
     height: 100%;
     align-items: center;
     padding: 10px;
@@ -43,7 +43,7 @@ export const PokemonNameAndId = styled.View`
 
 export const NormalText = styled.Text<NormalTextProps>`
     font-size: ${props=>props.fontSize}px;
-    color: ${props=>props.color};
+    color: ${props=>props.color ? props.color : "#666"};
     font-weight: ${props => props.fontWeight ? 'bold':'normal'}
 `;
 
@@ -58,13 +58,14 @@ export const TypeView = styled.View`
     margin-top: 50px;
     flex-direction: row;
     width: 65%;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+
     
 `;
 
 export const Type = styled.View<NormalTextProps>`
-    border: 2px solid ${props=>props.color};
+    border: 2px solid ${props => props.color ? props.color : "#666"};
     border-radius: 14px;
 
     height: 40px;
@@ -72,6 +73,8 @@ export const Type = styled.View<NormalTextProps>`
     justify-content: center;
     align-items: center;
     flex-direction: row;
+    margin: 2px;
+    
 `;
 
 export const ActionButtons = styled.View`
@@ -108,4 +111,16 @@ export const ProgressStatsBar = styled.View`
     width: 60%;
     height: 15px;
     background: #ddd;
+`;
+
+export const About = styled.View`
+    margin-top: 10px;
+    width: 100%;
+    justify-content: center;
+
+`;
+
+export const Text = styled.Text`
+    font-size: 16px;
+    text-align: center;
 `;

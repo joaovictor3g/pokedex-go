@@ -3,6 +3,8 @@ import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { Footer } from '../../components/Footer';
 import api from '../../services/api';
 import { Button, Container, GroupButton, PokemonContainer, Scroll, Search, TextButton, PokemonBox, PokemonName, PokemonImage } from './styles';
+import { IconPerType } from '../../components/IconPerType';
+import { View } from 'react-native';
 
 interface PokemonProps {
     name: string;
@@ -15,9 +17,6 @@ interface TypeProps {
     };
 }
 
-// "fire" | "poison" | "grass" | "psychic" | "ice" |  
-//         "flying" | "normal" | "water" | "dark" | "bug" | "electric" 
-//         | "fairy" | "fighting" | "dragon" | "ghost" | "ground" | "steel" | "rock";
 export function PokeList() {
     const [pokemons, setPokemons] = useState<PokemonProps[]>([]);
     const [types, setTypes] = useState<TypeProps[]>([]);
@@ -155,7 +154,7 @@ export function PokeList() {
 
     useEffect(() => {
         renderPokemons();
-        // getTypes(1);
+        getTypes(1);
     }, [isFocused]);
 
     return (
@@ -174,14 +173,28 @@ export function PokeList() {
                 <Scroll>
                     <PokemonContainer>
                         { pokemons && pokemons.map((pokemon: PokemonProps, index: number) => {
-                            
-                            // { getTypes(index+1)}
                             return(
-                                <PokemonBox key={pokemon.name} color={"#ddd"} onPress={()=>handleNavigateToDetail(index+1)}>
+                                <PokemonBox key={pokemon.name} color={color ? color: "#666"} onPress={()=>handleNavigateToDetail(index+1)}>
                                     <PokemonName>{pokemon.name}</PokemonName>
+                                    { serializedTypes.map((serializedType) => (
+                                        <View style={{
+                                            borderRadius: 100,
+                                            backgroundColor: '#fff',
+                                            width: 25,
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            marginBottom: 10,
+                                            height: 25
+                                        }} 
+                                        key={serializedType}
+                                        >
+                                            <IconPerType name={serializedType}/>
+                                        </View>
+                                    )) }
+                                    
                                     { index < 10 && <PokemonImage source={{ uri: `https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/00${index+1}.png`}}/> }
-                                    {/* { index >= 10 && index <100 && <PokemonImage source={require(`../../images/0${index+1}.png`)}/> }
-                                    { index >= 100 &&  <PokemonImage source={require(`../../images/${index+1}.png`)}/>} */}
+                                    { index >= 10 && index <100 && <PokemonImage source={{ uri: `https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/0${index+1}.png`}}/> }
+                                    { index >= 100 &&  <PokemonImage source={{ uri: `https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/${index+1}.png`}}/>}
                                 </PokemonBox>)
                             
                         }) }

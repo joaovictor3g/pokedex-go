@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { Footer } from '../../components/Footer';
 import { Container, FavoriteButton, Header, HeaderDownText, Scroll, HeaderText, PokemonBox, PokemonContent, PokemonImage, PokemonName, PokemonNumber, Types, TypeText, TypeView, TypeViewText, DescriptionView, DescriptionText } from './styles';
-import { Ionicons, EvilIcons, Entypo, FontAwesome5 } from '@expo/vector-icons';
+import { Ionicons, EvilIcons, Entypo, FontAwesome5,MaterialCommunityIcons } from '@expo/vector-icons';
 
 export function Home() {
     return (
@@ -28,6 +28,14 @@ export function Home() {
 
                         <PokemonBox>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <MaterialCommunityIcons 
+                                    name="pokeball" 
+                                    size={130} 
+                                    color="#6666" 
+                                    style={{
+                                        position: 'absolute'
+                                    }} 
+                                />
                                 <PokemonNumber>
                                     Nº 001
                                 </PokemonNumber>
