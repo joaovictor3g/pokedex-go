@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { Footer } from '../../components/Footer';
 import api from '../../services/api';
-import { Button, Container, GroupButton, PokemonContainer, Scroll, Search, TextButton, PokemonBox, PokemonName, PokemonImage } from './styles';
+import { Button, Container, GroupButton, PokemonContainer, Scroll, Search, TextButton, PokemonBox, PokemonName, PokemonImage, TypeContainer } from './styles';
 import { IconPerType } from '../../components/IconPerType';
-import { View } from 'react-native';
+import { TypeList } from '../../components/TypeList';
 
 interface PokemonProps {
     name: string;
@@ -197,10 +197,10 @@ export function PokeList() {
                         <TextButton>Tipos</TextButton>
                     </Button>
                 </GroupButton>
-                <Scroll>
-                    {buttonSelected==='pokemons' && <PokemonContainer>
-                    { pokemons && pokemons.map((pokemon: PokemonProps, index: number) => {
-                            
+                <Scroll showsVerticalScrollIndicator={false}>
+                    {buttonSelected==='pokemons' && 
+                        <PokemonContainer>
+                        { pokemons && pokemons.map((pokemon: PokemonProps, index: number) => { 
                             return(
                                 <PokemonBox key={pokemon.name} color={color ? color: "#666"} onPress={()=>handleNavigateToDetail(index+1)}>
                                     
@@ -230,9 +230,13 @@ export function PokeList() {
                         }) }
         
                     </PokemonContainer>}
-                    { buttonSelected==='types' &&
-                        
-                    }
+                    
+                    <TypeContainer>
+                        { buttonSelected==='types' && 
+                            nameTypesAndColors.map(type => (
+                            <TypeList key={type._id} nameType={type.name} color={type.color}/>
+                        ))}
+                    </TypeContainer>
                 </Scroll>
             </Container>
 

@@ -269,7 +269,7 @@ export function PokemonDetail(){
                         <TypeView>
                             { serializedTypes.map((serializedType, idx: number) => (
                                 <Type key={serializedType} color={colors.length>0 ? colors[idx] : undefined}>
-                                    <IconPerType name={serializedType} />
+                                    <IconPerType name={serializedType} color={colors[idx]} />
                                     <NormalText color={colors.length>0 ? colors[idx] : undefined} fontSize={20}>{capitalizeFirstLetter(serializedType)}</NormalText>
                                 </Type>
                             )) }

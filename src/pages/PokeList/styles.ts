@@ -12,6 +12,7 @@ export const Container = styled.View`
     flex: 1;
     align-items: center;
     padding-top: 40px;
+   
     
 `;
 
@@ -45,7 +46,13 @@ export const PokemonContainer = styled.View`
 
     flex-wrap: wrap;
     margin-top: 10px;
-`; 
+`;
+
+export const TypeContainer = styled.View`
+    width: 100%;
+    padding: 2%;
+    height: 100%;
+`;
 
 export const Scroll = styled.ScrollView`
 

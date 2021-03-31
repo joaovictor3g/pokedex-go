@@ -45,7 +45,7 @@ export function Home() {
 
                             </View>
                             <View style={{ alignItems: 'center' }}>
-                                <PokemonImage source={require('../../images/001.png')} resizeMode="contain"/>
+                                <PokemonImage source={{ uri: `https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/001.png` }} resizeMode="contain"/>
                             </View>
                         </PokemonBox>
 
