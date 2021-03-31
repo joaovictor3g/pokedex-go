@@ -4,6 +4,10 @@ interface PokemonBoxColor {
     color: string;
 }
 
+interface Button {
+    isSelected?:boolean;
+};
+
 export const Container = styled.View`
     flex: 1;
     align-items: center;
@@ -25,8 +29,8 @@ export const GroupButton = styled.View`
     width: 50%;
 `;
 
-export const Button = styled.TouchableOpacity`
-    /* border-bottom-width: 1px; */
+export const Button = styled.TouchableOpacity<Button>`
+    border-bottom-width: ${props => props.isSelected ? `${2}px`: 0};
 `;
 
 export const TextButton = styled.Text`
