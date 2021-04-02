@@ -27,7 +27,7 @@ export const EditButton = styled.TouchableOpacity`
 `;
 
 export const Text = styled.Text<Text>`
-    font-size: ${props => props.size};
+    font-size: ${props => props.size}px;
     font-weight: ${props => props.fontWeight ? 'bold':'normal'};
     color: ${props => props.color};
 
