@@ -48,3 +48,10 @@ export const ProfileImage = styled.Image`
     border-width: 10px;
     border-color: #48A9E0; 
 `;
+
+
+
+export const Main = styled.View`
+    margin-top: 70px;
+    align-items: center;
+`;

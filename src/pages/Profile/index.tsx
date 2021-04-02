@@ -1,7 +1,7 @@
 import React from 'react';
 import { Footer } from '../../components/Footer';
-import { BackAndEditButtons, Container, EditButton, Header, ImageContainer, ProfileImage, Text } from './styles';
-import { MaterialIcons } from '@expo/vector-icons';
+import { BackAndEditButtons, Container, EditButton, Header, ImageContainer, Main, ProfileImage, Text } from './styles';
+import { MaterialIcons, Foundation } from '@expo/vector-icons';
 
 export function Profile() {
     return (
@@ -25,6 +25,22 @@ export function Profile() {
                         <ProfileImage source={{ uri: 'https://avatars.githubusercontent.com/u/55103977?v=4' }} resizeMode="contain"/>
                     </ImageContainer>
                 </Header>
+
+                <Main>
+                    <Text
+                        color="#000"
+                        size={30}
+                        fontWeight
+                    >João Victor</Text>
+
+                    <Text 
+                        color="#666"
+                        size={15}
+                        style={{ alignItems: 'center' }}
+                    >
+                        <Foundation name="marker" size={20} color="black" />
+                        Ginásio de Kanto</Text>
+                </Main>
             </Container>
             <Footer currentPage="profile"/>
         </>
