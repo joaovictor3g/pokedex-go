@@ -17,13 +17,14 @@ export function Routes(){
             <Tab.Navigator 
                 screenOptions={{ 
                     tabBarVisible: false
-                }}>
+                }}>           
                 <Tab.Screen name="/" component={Login} />
                 <Tab.Screen name="/home" component={Home} />
                 <Tab.Screen name="/pokelist" component={PokeList} />
                 <Tab.Screen name="/favorites" component={Favorites} />
                 <Tab.Screen name="/profile" component={Profile} />
                 <Tab.Screen name="/pokelist/detail" component={PokemonDetail} />
+                
             </Tab.Navigator>
         </NavigationContainer>
     );
