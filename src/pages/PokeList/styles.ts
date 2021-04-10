@@ -1,9 +1,5 @@
 import styled from 'styled-components/native';
 
-interface PokemonBoxColor {
-    color: string;
-}
-
 interface Button {
     isSelected?:boolean;
 };
@@ -56,28 +52,4 @@ export const TypeContainer = styled.View`
 
 export const Scroll = styled.ScrollView`
 
-`;
-
-export const PokemonBox = styled.TouchableOpacity<PokemonBoxColor>`
-    width: 150px;
-    height: 120px;
-    background:${props => props.color};
-    border-radius: 10px;
-    margin: 2px;
-    margin-bottom: 20px;
-    padding: 5px;
-`;
-
-export const PokemonName = styled.Text`
-    color: #fff;
-    font-size: 18px;
-    font-weight: bold;
-`;
-
-export const PokemonImage = styled.Image`
-    width: 80px;
-    height: 80px;
-    position: absolute;
-    bottom: -10px;
-    right: 10px;
 `;

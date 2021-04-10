@@ -58,9 +58,7 @@ export function PokemonDetail(){
     const [uniqueDescription, setUniqueDescription] = useState([]);
 
     const [pokemon, setPokemon] = useState({} as PokemonProps);
-
-    const [isLoading, setIsLoading] = useState(true);
-    const [nameTypesAndColors, setNameTypesAndColors] = useState<TypeJSONProps[]>(typesInJSON);
+    const nameTypesAndColors = typesInJSON;
 
     function capitalizeFirstLetter (word: string) {
         return word.charAt(0).toUpperCase() + word.slice(1)
@@ -83,21 +81,25 @@ export function PokemonDetail(){
         }
       }
 
+    async function getInfoPokemon() {
+        try {
+            const res = await api.get(`/pokemon/${id}`)
+            setPokemon(res.data);
+            setName(res.data.name);
+            setTypes(res.data.types);
+            setStats(res.data.stats);
+            getColors();
+            getDetail();
+            
+        } catch(err) {
+
+        }
+    }
+
     useEffect(() => {
-        api.get(`/pokemon/${id}`)
-            .then(res => {
-                setPokemon(res.data);
-                setName(res.data.name);
-                setTypes(res.data.types);
-                setStats(res.data.stats);
-                
-                getColors();
-                getDetail();
-                setIsLoading(!isLoading);
-                
-            }).catch(err => console.log('Erro ao buscar dados'));
+        getInfoPokemon()
         
-    }, [isFocused, isLoading]);
+    }, [isFocused]);
     
     function getColors() {
         setSerializedTypes(types.map((type: TypeProps) => type.type.name));
@@ -132,7 +134,7 @@ export function PokemonDetail(){
     return (
         <>
             <Container>
-                {(name) ?
+                {(name && types && stats) ?
                 <PokemonView color={colors ? colors[0] : "#ddd"}>
                     <PokemonProfile>
                         <MaterialCommunityIcons 
