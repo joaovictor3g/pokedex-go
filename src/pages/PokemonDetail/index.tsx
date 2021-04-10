@@ -7,7 +7,7 @@ import api from '../../services/api';
 import { ActivityIndicator, View } from 'react-native';
 import { IconPerType } from '../../components/IconPerType';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Evolutions } from '../../components/Evolutions';
+import typesInJSON from '../../../types.json';
 
 interface TypeProps {
     type: {
@@ -39,6 +39,12 @@ interface FlavorText {
     }
 };
 
+interface TypeJSONProps {
+    _id: number;
+    name: string;
+    color: string;
+}
+
 export function PokemonDetail(){
     const isFocused = useIsFocused();
     const { params } = useRoute();
@@ -54,98 +60,7 @@ export function PokemonDetail(){
     const [pokemon, setPokemon] = useState({} as PokemonProps);
 
     const [isLoading, setIsLoading] = useState(true);
-    const [nameTypesAndColors, setNameTypesAndColors] = useState([
-        { 
-            _id: 1,
-            name: "fire",
-            color: "#ff8000"
-        },
-        {
-            _id: 2,
-            name: "poison",
-            color: "#730099"
-        },
-        {
-            _id:3,
-            name: "grass",
-            color: "#4DD8B9"
-        },
-        {
-            _id: 4,
-            name: "psychic",
-            color: "#d24dff"
-        },
-        {
-            _id: 5,
-            name: "ice",
-            color: "#80e5ff"
-        },
-        {
-            _id: 6,
-            name: "flying",
-            color: "#1affff"
-        },
-        {
-            _id: 7,
-            name: "normal",
-            color: "#a3a375"
-        },
-        {
-            _id: 8,
-            name: "water",
-            color: "#0099ff"
-        },
-        {
-            _id: 9,
-            name: "dark",
-            color: "#003366"
-        },
-        {
-            _id: 10,
-            name: "rock",
-            color: "#b37700"
-        },
-        {
-            _id: 11,
-            name: "bug",
-            color: "#333300"
-        },
-        {
-            _id: 12,
-            name: "electric",
-            color: "#ffff33"
-        },
-        {
-            _id: 13,
-            name: "fairy",
-            color: "#ff4d88"
-        },
-        {
-            _id: 14,
-            name: "fighting",
-            color: "#ff3300"
-        },
-        {
-            _id: 15,
-            name: "dragon",
-            color: "#008fb3"
-        },
-        {
-            _id: 16,
-            name: "ghost",
-            color: "#000080"
-        },
-        {
-            _id: 17,
-            name: "ground",
-            color: "#4d2600"
-        },
-        {
-            _id: 18,
-            name: "steel",
-            color: "#33ff99"
-        }
-    ])
+    const [nameTypesAndColors, setNameTypesAndColors] = useState<TypeJSONProps[]>(typesInJSON);
 
     function capitalizeFirstLetter (word: string) {
         return word.charAt(0).toUpperCase() + word.slice(1)
