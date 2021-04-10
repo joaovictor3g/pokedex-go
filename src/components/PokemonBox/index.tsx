@@ -24,12 +24,13 @@ interface TypeProps {
 
 export function PokemonBox({ color, handleNavigateToDetail, pokemon, index, background, width }: PokemonBoxProps) {
     const [types, setTypes] = useState<TypeProps[]>([]);
+    const [colorType, setColorType] = React.useState<string>('');
     
     async function getTypes() {
         const response = await api.get(`${pokemon.url}`);
         
         console.log(response.data.types);
-        setTypes(response.data.types);
+        setTypes(response.data.types.reverse());
 
     }
 
@@ -39,13 +40,12 @@ export function PokemonBox({ color, handleNavigateToDetail, pokemon, index, back
 
     useEffect(() => {
         getTypes();
-       
         
     }, []);
     
     return(
         <PokemonViewBox 
-            background={background ? background: "#666"} 
+            background={colorType ? colorType : "#666"} 
             onPress={()=>handleNavigateToDetail(index)}
             width={width}
         >         
@@ -55,7 +55,13 @@ export function PokemonBox({ color, handleNavigateToDetail, pokemon, index, back
             
             
             { types.map(type => (
-               <IconPerType key={type.type.name} color={"#666"} name={type.type.name} size={20} />   
+               <IconPerType 
+                key={type.type.name} 
+                color={"#666"} 
+                name={type.type.name} 
+                size={20} 
+                setColor={setColorType}
+               />   
                 
             )) }
             

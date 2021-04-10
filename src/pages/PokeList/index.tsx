@@ -7,22 +7,16 @@ import { IconPerType } from '../../components/IconPerType';
 import { TypeList } from '../../components/TypeList';
 import typesInJSON from '../../../types.json';
 import { PokemonBox } from '../../components/PokemonBox';
+import { ActivityIndicator } from 'react-native';
 
 export interface PokemonProps {
     name: string;
     url: string;
 }
 
-interface TypeProps {
-    type: {
-        name: string;
-    };
-}
 
 export function PokeList() {
     const [pokemons, setPokemons] = useState<PokemonProps[]>([]);
-    const [types, setTypes] = useState<TypeProps[]>([]);
-    const [serializedTypes, setSerializedTypes] = useState<string[]>([]);
     const [color, setColor] = useState('');
     const isFocused = useIsFocused();
     const { navigate } = useNavigation();
@@ -32,47 +26,11 @@ export function PokeList() {
     
     async function renderPokemons() {
         try {
-            const response = await api.get('/pokemon?offset=0&limit=30')
+            const response = await api.get('/pokemon?offset=0&limit=50')
             setPokemons(response.data.results);
         } catch(err) {
             console.log(err);
         }
-    }
-
-    async function getTypes(_id: number): Promise<{ types: string[]; color: string; } | undefined> {
-        try{  
-            const response = await api.get(`/pokemon/${_id}`);
-
-            setTypes(response.data.types);                
-            setSerializedTypes(types.map((type) => type.type.name)) 
-            
-            nameTypesAndColors.forEach(item => {
-                if(color!=='')
-                    return;
-                if(item.name===serializedTypes[0]) {
-                    
-                    const colorType: string = item.color;
-                    setColor(colorType);
-                    
-                }
-            });
-            return { types:serializedTypes, color: color };
-        } catch(err) {
-        
-        }
-    }
-
-    function getIntermediateTypes(_id: number) {
-        getTypes(1).then(res =>{
-            if(res) {
-                console.log(res);
-                setSerializedTypes(res.types);
-                setColor(res.color);
-                return true;
-            }
-        })
-
-        return false;
     }
 
     function handleNavigateToDetail(id: number) {
@@ -81,12 +39,6 @@ export function PokeList() {
 
     useEffect(() => {
         renderPokemons();
-        // getTypes(4).then(res => console.log(res));
-        // getTypes(1);
-        // [1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => {
-        //     console.log(num)
-        //     getTypes(num).then(res => console.log(res))
-        // })
     }, [isFocused]);
 
 
@@ -109,14 +61,14 @@ export function PokeList() {
                         <TextButton>Tipos</TextButton>
                     </Button>
                 </GroupButton>
-                <Scroll showsVerticalScrollIndicator={false}>
+                {pokemons.length>0 ? <Scroll showsVerticalScrollIndicator={false}>
                     {buttonSelected==='pokemons' && 
                         <PokemonContainer>
                         { pokemons && pokemons.map((pokemon: PokemonProps, index: number) => { 
                             return(
                                 <PokemonBox 
                                     key={pokemon.name}
-                                    background="#666"
+                                    background=""
                                     color={color}
                                     handleNavigateToDetail={handleNavigateToDetail}
                                     index={index+1}
@@ -133,7 +85,7 @@ export function PokeList() {
                             <TypeList key={type._id} nameType={type.name} color={type.color}/>
                         ))}
                     </TypeContainer>
-                </Scroll>
+                </Scroll> : <ActivityIndicator size="small" color="blue"/>}
             </Container>
 
             <Footer currentPage="pokelist"/>

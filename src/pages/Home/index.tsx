@@ -1,10 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { Footer } from '../../components/Footer';
 import { Container, FavoriteButton, Header, HeaderDownText, Scroll, HeaderText, PokemonBox, PokemonContent, PokemonImage, PokemonName, PokemonNumber, Types, TypeText, TypeView, TypeViewText, DescriptionView, DescriptionText } from './styles';
 import { Ionicons, EvilIcons, Entypo, FontAwesome5,MaterialCommunityIcons } from '@expo/vector-icons';
+import { PokemonProps } from '../PokeList';
+import api from '../../services/api';
+import { IconPerType } from '../../components/IconPerType';
+import { capitalizeFirstLetter } from '../../utils/capitalizeFirstLetter';
+
+interface TypeProps {
+    type: {
+     name: string;
+     url: string;
+    }
+ }
 
 export function Home() {
+    const [pokemon, setPokemon] = useState({} as PokemonProps);
+    const [types, setTypes] = useState<TypeProps[]>([]);
+    const [randomId, setRandomId] = useState(Math.floor(Math.random() * 800 + 1));
+    const [colorType, setColorType] = useState('');
+
+    useEffect(() => {
+        console.log(randomId);
+        getPokemonRandomly();
+    
+    }, [randomId]);
+
+    async function getPokemonRandomly() {
+        console.log(randomId);
+        try {
+            const response = await api.get(`/pokemon/${randomId}`);
+
+            setPokemon(response.data);
+            setTypes(response.data.types)
+        } catch(err) {
+
+        }
+    }    
+    
     return (
         <>
             <Container>
@@ -24,9 +58,9 @@ export function Home() {
 
                 <PokemonContent>
                     <Scroll showsVerticalScrollIndicator={false}>
-                        <PokemonName>Bulbasaur</PokemonName>
+                        <PokemonName>{capitalizeFirstLetter(pokemon.name ?? '')}</PokemonName>
 
-                        <PokemonBox>
+                        <PokemonBox background={colorType ? colorType: '#666'}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <MaterialCommunityIcons 
                                     name="pokeball" 
@@ -37,7 +71,7 @@ export function Home() {
                                     }} 
                                 />
                                 <PokemonNumber>
-                                    Nº 001
+                                    Nº {randomId}
                                 </PokemonNumber>
                                 <FavoriteButton>
                                     <EvilIcons name="heart" size={35} color="#fff" />
@@ -45,7 +79,9 @@ export function Home() {
 
                             </View>
                             <View style={{ alignItems: 'center' }}>
-                                <PokemonImage source={{ uri: `https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/001.png` }} resizeMode="contain"/>
+                                { randomId < 10 && <PokemonImage source={{ uri: `https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/00${randomId}.png` }} resizeMode="contain"/> }
+                                { randomId >= 10 && randomId < 100 && <PokemonImage source={{ uri: `https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/0${randomId}.png` }} resizeMode="contain"/>}
+                                { randomId > 100 && <PokemonImage source={{ uri: `https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/${randomId}.png` }} resizeMode="contain"/> }
                             </View>
                         </PokemonBox>
 
@@ -53,18 +89,19 @@ export function Home() {
                             <TypeText>Tipo</TypeText>
 
                             <View style={{ flexDirection: 'row' }}>
-                                <TypeView color="#4DD8B9">
-                                    <Entypo name="leaf" size={24} color="#4DD8B9" />
-                                    <TypeViewText>
-                                        Planta
-                                    </TypeViewText>
-                                
-                                </TypeView>
-
-                                <TypeView color="purple">
-                                    <FontAwesome5 name="skull" size={20} color="purple" />
-                                    <TypeViewText >Veneno</TypeViewText>
-                                </TypeView>
+                                { types.map(type => (
+                                    <TypeView color={colorType}>
+                                        <IconPerType 
+                                            name={type.type.name} 
+                                            color="#000" 
+                                            size={24} 
+                                            setColor={setColorType}
+                                        />
+                                        <TypeViewText color={colorType}> 
+                                            {capitalizeFirstLetter(type.type.name)}
+                                        </TypeViewText>
+                                    </TypeView>
+                                )) }
                             </View>
                         </Types>
 

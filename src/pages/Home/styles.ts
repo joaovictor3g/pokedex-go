@@ -4,6 +4,10 @@ interface TypeParams {
     color: string;
 }
 
+interface PokemonBoxProps {
+    background: string;
+}
+
 export const Container = styled.View`
     flex: 1;
     padding: 30px;
@@ -43,10 +47,10 @@ export const PokemonName = styled.Text`
     text-align: center;
 `;
 
-export const PokemonBox = styled.View`
+export const PokemonBox = styled.View<PokemonBoxProps>`
     width: 100%;
     height: 200px;
-    background: #4DD8B9;
+    background: ${props => props.background};
     border-radius: 20px;
     padding: 20px;
 `;
@@ -88,10 +92,10 @@ export const TypeView = styled.View<TypeParams>`
     
 `;
 
-export const TypeViewText = styled.Text`
+export const TypeViewText = styled.Text<TypeParams>`
     font-size: 16px;
     font-weight: bold;
-    color: #666;
+    color: ${props => props.color};
 `;
 
 export const DescriptionView = styled.View`
