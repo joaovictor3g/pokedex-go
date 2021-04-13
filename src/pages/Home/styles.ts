@@ -100,6 +100,10 @@ export const TypeViewText = styled.Text<TypeParams>`
 
 export const DescriptionView = styled.View`
     margin-top: 40px;
+    justify-content: center;
+    align-items: center;
+
+
 `;
 
 export const DescriptionText = styled.Text`

@@ -88,32 +88,35 @@ export function PokemonDetail(){
             setName(res.data.name);
             setTypes(res.data.types);
             setStats(res.data.stats);
-            getColors();
+            setSerializedTypes(res.data.types.map((type: TypeProps) => type.type.name));
+
+            let arr: string[] = [];
+            
+
+            res.data.types.map((serializedType: TypeProps) => {
+                nameTypesAndColors.map(nameTypeAndColor => {
+                    if(serializedType.type.name === nameTypeAndColor.name) {
+                        console.log("entrou")
+                        arr.push(nameTypeAndColor.color)
+                        
+                    }
+                })
+            });
+            console.log(arr);
+            setColors(arr);
             getDetail();
             
         } catch(err) {
 
         }
     }
-
     useEffect(() => {
         getInfoPokemon()
         
     }, [isFocused]);
     
     function getColors() {
-        setSerializedTypes(types.map((type: TypeProps) => type.type.name));
-
-        let arr: string[] = [];
         
-        serializedTypes && serializedTypes.map((serializedType: string) => {
-            nameTypesAndColors.map(nameTypeAndColor => {
-                if(serializedType === nameTypeAndColor.name) {
-                    arr.push(nameTypeAndColor.color)
-                    setColors(arr);
-                }
-            })
-        });
     }
 
     const navigation = useNavigation();
@@ -146,9 +149,8 @@ export function PokemonDetail(){
     return (
         <>
             <Container>
-                {(name && types && stats) ?
-                
-                <PokemonView color={colors ? colors[0] : "#ddd"}>
+                {(name && types.length>0 && stats.length>0 && colors.length>0 && serializedTypes.length>0) ?
+                (<PokemonView color={colors ? colors[0] : "#666"}>
                     <PokemonProfile>
                         <MaterialCommunityIcons 
                             name="pokeball" 
@@ -208,13 +210,13 @@ export function PokemonDetail(){
                         {id >= 100 && <PokeImage source={{ uri: `https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/${id}.png` }}/>}
                         <TypeView>
                             { serializedTypes.map((serializedType, idx: number) => (
-                                <Type key={serializedType} color={colors.length>0 ? colors[idx] : undefined}>
+                                <Type key={serializedType} color={colors ? colors[idx] : "#666"}>
                                     <IconPerType 
                                         name={serializedType} 
-                                        color={colors[idx]} 
+                                        color={colorType ? colorType : "#666"} 
                                         handleChangeColor={handleChangeColor}    
                                     />
-                                    <NormalText color={colors.length>0 ? colors[idx] : undefined} fontSize={20}>{capitalizeFirstLetter(serializedType)}</NormalText>
+                                    <NormalText color={colors ? colors[idx] : undefined} fontSize={20}>{capitalizeFirstLetter(serializedType)}</NormalText>
                                 </Type>
                             )) }
                         </TypeView>
@@ -280,8 +282,7 @@ export function PokemonDetail(){
                         }
                         {/* {btnSelected==="evolution" && <Evolutions id={id}/>} */}
                     </PokemonInfoBox>
-                </PokemonView> 
-
+                </PokemonView>)
                 : 
                     (<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <ActivityIndicator size="large" color="blue"/>

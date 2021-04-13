@@ -20,7 +20,7 @@ export function IconPerType({ name, size, color, handleChangeColor }: Icon) {
         else if(name==="dragon") handleChangeColor("#ff8000");
         else if(name==="normal") handleChangeColor("#ff8000");
         else if(name==="rock") handleChangeColor("#ff8000");
-        else if(name==="fighting") handleChangeColor("#ff8000");
+        else if(name==="fighting") handleChangeColor("#ff2f2f");
         else if(name==="ghost") handleChangeColor("#ff8000");
         else if(name==="psychic") handleChangeColor("#ff8000");
         else if(name==="ice") handleChangeColor("#ff8000");
@@ -39,7 +39,7 @@ export function IconPerType({ name, size, color, handleChangeColor }: Icon) {
             {name==="dragon" && <FontAwesome5 name="dragon" size={size || 24} color={color} />}
             {name==='normal' && <FontAwesome5 name="egg" size={size || 24} color={color} />}
             {name==="rock" && <FontAwesome5 name="mountain" size={size || 24} color={color} />}
-            {name==="fighting" && <FontAwesome5 name="fist-raised" size={size || 24} color={color} /> }
+            {name==="fighting" && <FontAwesome5 name="fist-raised" size={size || 24} color={"#ff2f2f"} /> }
             {name==="ghost" && <FontAwesome5 name="ghost" size={size || 24} color={color} />}
             {name==="psychic" && <AntDesign name="eye" size={size || 24} color={color} /> }
             {name==="ice" && <FontAwesome name="snowflake-o" size={size || 24} color={color} />}

@@ -39,7 +39,6 @@ export function Home() {
     }, [randomId]);
 
     async function getPokemonRandomly() {
-        console.log(randomId);
         try {
             const response = await api.get(`/pokemon/${randomId}`);
 
