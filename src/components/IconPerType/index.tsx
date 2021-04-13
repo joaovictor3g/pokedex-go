@@ -37,7 +37,7 @@ export function IconPerType({ name, size, color, handleChangeColor }: Icon) {
             {name==="dark" && <Entypo name="moon" size={size || 24} color="#003366" /> }
             {name==="electric" && <MaterialCommunityIcons name="lightning-bolt" size={size ||24} color="#F4C947" /> }
             {name==="dragon" && <FontAwesome5 name="dragon" size={size || 24} color={color} />}
-            {name==='normal' && <FontAwesome5 name="egg" size={size || 24} color={color} />}
+            {name==='normal' && <FontAwesome5 name="egg" size={size || 24} color={"#666"} />}
             {name==="rock" && <FontAwesome5 name="mountain" size={size || 24} color={color} />}
             {name==="fighting" && <FontAwesome5 name="fist-raised" size={size || 24} color={"#ff2f2f"} /> }
             {name==="ghost" && <FontAwesome5 name="ghost" size={size || 24} color={color} />}

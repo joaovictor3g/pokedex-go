@@ -38,12 +38,25 @@ export function Favorites() {
                 <PokemonContainer>
                     <ScrollView showsVerticalScrollIndicator={false}>
                         <PokemonBox 
+                            padding={20}
                             background="#fff"
                             color="#000"
                             index={1}
                             pokemon={pokemons[0]}
                             handleNavigateToDetail={handleNavigateToDetail}
                             width={100}
+                            imageSize={200}
+                        />
+
+                        <PokemonBox 
+                            padding={20}
+                            background="#fff"
+                            color="#000"
+                            index={1}
+                            pokemon={pokemons[0]}
+                            handleNavigateToDetail={handleNavigateToDetail}
+                            width={100}
+                            imageSize={200}
                         />
                     </ScrollView>
                 </PokemonContainer>

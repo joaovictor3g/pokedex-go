@@ -12,7 +12,9 @@ interface PokemonBoxProps {
     index: number;
     handleNavigateToDetail: (index: number) => void;
     width?: number;
-    background: string;
+    background?: string;
+    padding?: number;
+    imageSize?:number;
 }
 
 interface TypeProps {
@@ -22,16 +24,23 @@ interface TypeProps {
    }
 }
 
-export function PokemonBox({ color, handleNavigateToDetail, pokemon, index, background, width }: PokemonBoxProps) {
+export function PokemonBox({ 
+    color, 
+    handleNavigateToDetail, 
+    pokemon, 
+    index, 
+    background, 
+    width,
+    padding,
+    imageSize
+}: PokemonBoxProps) {
     const [types, setTypes] = useState<TypeProps[]>([]);
     const [colorType, setColorType] = React.useState<string>('');
     
     async function getTypes() {
         const response = await api.get(`${pokemon.url}`);
-        
-        console.log(response.data.types);
+    
         setTypes(response.data.types.reverse());
-
     }
 
     function capitalizeFirstLetter (word: string) {
@@ -50,9 +59,11 @@ export function PokemonBox({ color, handleNavigateToDetail, pokemon, index, back
     
     return(
         <PokemonViewBox 
-            background={colorType ? colorType : "#666"} 
+            background={background ? background : colorType} 
             onPress={()=>handleNavigateToDetail(index)}
             width={width}
+            padding={padding}
+            imageSize={imageSize}
         >         
             <PokemonName
                 color={color}

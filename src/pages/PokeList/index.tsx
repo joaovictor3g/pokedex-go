@@ -3,7 +3,7 @@ import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { Footer } from '../../components/Footer';
 import api from '../../services/api';
 import { Button, Container, GroupButton, PokemonContainer, Scroll, Search, TextButton, TypeContainer } from './styles';
-import { IconPerType } from '../../components/IconPerType';
+import { FlatList, ListRenderItem } from 'react-native';
 import { TypeList } from '../../components/TypeList';
 import typesInJSON from '../../../types.json';
 import { PokemonBox } from '../../components/PokemonBox';
@@ -23,28 +23,80 @@ export function PokeList() {
     const [buttonSelected, setButtonSelected] = useState('pokemons');
 
     const [nameTypesAndColors, setNameTypesAndColors] = useState(typesInJSON)
-    
+    const [pokemonSearched, setPokemonSearched] = useState('');
+    const [limit, setLimit] = useState(8);
+    const [offset, setOffset] = useState(0);
+
     async function renderPokemons() {
         try {
-            const response = await api.get('/pokemon?offset=0&limit=9')
+            const response = await api.get(`/pokemon?offset=${offset}&limit=${limit}`)
             setPokemons(response.data.results);
+            renderMorePokemons();
         } catch(err) {
             console.log(err);
         }
     }
 
+
+
     function handleNavigateToDetail(id: number) {
         navigate('/pokelist/detail', { id });
+    }
+
+    async function handleSearchPokemon() {
+        const response = await api.get(`/pokemon/${pokemonSearched}`);
+
+        setPokemons(response.data);
+        
     }
 
     useEffect(() => {
         renderPokemons();
     }, [isFocused]);
 
+    const Pokemon: ListRenderItem<PokemonProps> = ({ item, index, separators }) => {
+        return(
+            <PokemonBox 
+                key={item.name}
+                background=""
+                color={color}
+                handleNavigateToDetail={handleNavigateToDetail}
+                index={index+1}
+                pokemon={item}
+            />
+            
+        )
+    }
+
+    const renderItem: ListRenderItem<PokemonProps> = ({ item, index, separators }) => {
+        return (    
+            <Pokemon
+                item={item}
+                index={index}
+                separators={separators}
+            />
+        );
+    }
+
+    const Loading = () => (
+        <ActivityIndicator size="small" color="blue"/>
+    );
+
+    function renderMorePokemons() {
+        setLimit(limit+2);
+        // setOffset(offset+2);
+    }
+
     return (
         <>
             <Container>
-                <Search placeholder="Pesquisar"/>
+                <Search 
+                    value={pokemonSearched} 
+                    onChangeText={value => setPokemonSearched(value)} 
+                    placeholder="Pesquisar"
+
+                />
+                <Button onPress={handleSearchPokemon}><TextButton>ir</TextButton></Button>
             
                 <GroupButton>
                     <Button 
@@ -60,7 +112,7 @@ export function PokeList() {
                         <TextButton>Tipos</TextButton>
                     </Button>
                 </GroupButton>
-                {pokemons.length>0 ? <Scroll showsVerticalScrollIndicator={false}>
+                {/* {pokemons.length>0 ? <Scroll showsVerticalScrollIndicator={false}>
                     {buttonSelected==='pokemons' && 
                         <PokemonContainer>
                         { pokemons && pokemons.map((pokemon: PokemonProps, index: number) => { 
@@ -84,7 +136,22 @@ export function PokeList() {
                             <TypeList key={type._id} nameType={type.name} color={type.color}/>
                         ))}
                     </TypeContainer>
-                </Scroll> : <ActivityIndicator size="small" color="blue"/>}
+                </Scroll> : <ActivityIndicator size="small" color="blue"/>} */}
+            
+            <PokemonContainer>
+                <FlatList 
+                    style={{ flex: 1 }}
+                    contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}
+                    data={pokemons}
+                    renderItem={renderItem}
+                    keyExtractor={item => item.name}
+                    onEndReached={renderPokemons}
+                    onEndReachedThreshold={0.02}
+                    ListFooterComponent={Loading}
+                    numColumns={2}
+                />
+            </PokemonContainer>
+            
             </Container>
 
             <Footer currentPage="pokelist"/>

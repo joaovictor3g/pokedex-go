@@ -37,12 +37,14 @@ export const TextButton = styled.Text`
 export const PokemonContainer = styled.View`
     width: 100%;
     padding: 2%;
-    height: 100%;
     flex-direction: row;
-
+    justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
     margin-top: 10px;
+    max-height: 80%;
 `;
+
 
 export const TypeContainer = styled.View`
     width: 100%;
