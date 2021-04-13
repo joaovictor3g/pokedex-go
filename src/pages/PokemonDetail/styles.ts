@@ -14,6 +14,15 @@ export const Container = styled.View`
     flex: 1;
 `;
 
+export const BackFavButtonsView = styled.View`
+    flex-direction: row;
+    justify-content: space-between;
+`;
+
+export const HeaderButton = styled.TouchableOpacity`
+`;
+
+
 export const PokemonView = styled.View<NormalTextProps>`
     background: ${props=>props.color  ? props.color : "#666"};
     width: 100%;

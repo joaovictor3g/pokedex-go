@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { About, ActionButtons, Button, Container, NormalText, PokeImage, PokemonInfoBox, PokemonNameAndId, PokemonProfile, PokemonView, ProgressStatsBar, Separator, Stats, StatusBar, Text, Type, TypeView } from './styles';
-import { useFocusEffect, useRoute } from '@react-navigation/native';
+import { About, ActionButtons, BackFavButtonsView, Button, Container, HeaderButton, NormalText, PokeImage, PokemonInfoBox, PokemonNameAndId, PokemonProfile, PokemonView, ProgressStatsBar, Separator, Stats, StatusBar, Text, Type, TypeView } from './styles';
+import { useRoute } from '@react-navigation/native';
 import { Footer } from '../../components/Footer';
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import api from '../../services/api';
 import { ActivityIndicator, View } from 'react-native';
 import { IconPerType } from '../../components/IconPerType';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import typesInJSON from '../../../types.json';
 
 interface TypeProps {
@@ -116,6 +116,12 @@ export function PokemonDetail(){
         });
     }
 
+    const navigation = useNavigation();
+
+    function handleGoBack() {
+        navigation.goBack();
+    }
+
     function adjustStatsParameters(stat: string) {
         if(stat==="hp")
             return "HP"
@@ -130,11 +136,18 @@ export function PokemonDetail(){
         else if(stat==="speed")
             return "Speed"
     }
+
+    const [colorType, setColorType] = useState('');
+    function handleChangeColor(color: string) {
+        setColorType(color);
+    }
+
    
     return (
         <>
             <Container>
                 {(name && types && stats) ?
+                
                 <PokemonView color={colors ? colors[0] : "#ddd"}>
                     <PokemonProfile>
                         <MaterialCommunityIcons 
@@ -158,6 +171,16 @@ export function PokemonDetail(){
                                 right: -20
                             }} 
                         />
+
+                        <BackFavButtonsView>
+                            <HeaderButton onPress={handleGoBack}>
+                                <Ionicons name="arrow-back" size={30} color="#fff" />
+                            </HeaderButton>
+                            <HeaderButton>
+                                <MaterialIcons name="favorite-border" size={30} color="#fff" />
+                            </HeaderButton>
+                        </BackFavButtonsView>
+
                         <PokemonNameAndId>
                             <NormalText 
                                 color="#fff"
@@ -186,7 +209,11 @@ export function PokemonDetail(){
                         <TypeView>
                             { serializedTypes.map((serializedType, idx: number) => (
                                 <Type key={serializedType} color={colors.length>0 ? colors[idx] : undefined}>
-                                    <IconPerType name={serializedType} color={colors[idx]} />
+                                    <IconPerType 
+                                        name={serializedType} 
+                                        color={colors[idx]} 
+                                        handleChangeColor={handleChangeColor}    
+                                    />
                                     <NormalText color={colors.length>0 ? colors[idx] : undefined} fontSize={20}>{capitalizeFirstLetter(serializedType)}</NormalText>
                                 </Type>
                             )) }

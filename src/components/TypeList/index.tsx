@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IconPerType } from '../IconPerType';
 import { Container, TypeIcon, TypeName } from './styles';
 import { AntDesign } from '@expo/vector-icons';
@@ -11,11 +11,22 @@ interface TypeListProps {
 }
 
 export function TypeList({ nameType, color }: TypeListProps) {
+    const [colorType, setColorType] = useState('');
+    function handleChangeColor(color: string) {
+        setColorType(color);
+    }
+
+    
     return (
         <Container>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <TypeIcon color={color}>
-                    <IconPerType name={nameType} size={30} color={color}/>
+                    <IconPerType 
+                        name={nameType} 
+                        size={30} 
+                        color={color}
+                        handleChangeColor={handleChangeColor}
+                    />
                     
                 </TypeIcon>
                 <TypeName>

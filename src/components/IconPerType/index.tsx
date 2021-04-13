@@ -5,27 +5,27 @@ interface Icon {
     name: string;
     size?: number;
     color: string;
-    setColor: React.Dispatch<React.SetStateAction<string>>;
+    handleChangeColor: (color: string) => void;
 }
 
-export function IconPerType({ name, size, color, setColor }: Icon) {
+export function IconPerType({ name, size, color, handleChangeColor }: Icon) {
     useEffect(() => {
-        if(name=== "grass") setColor("#4DD8B9");
-        else if(name==='poison') setColor("purple")
-        else if(name==="fire") setColor("#ff8000");
-        else if(name==="water") setColor("#0099ff");
-        else if(name==="bug") setColor("#333300");
-        else if(name==="dark") setColor("#003366");
-        else if(name==="electric") setColor("#F4C947");
-        else if(name==="dragon") setColor("#ff8000");
-        else if(name==="normal") setColor("#ff8000");
-        else if(name==="rock") setColor("#ff8000");
-        else if(name==="fighting") setColor("#ff8000");
-        else if(name==="ghost") setColor("#ff8000");
-        else if(name==="psychic") setColor("#ff8000");
-        else if(name==="ice") setColor("#ff8000");
+        if(name=== "grass") handleChangeColor("#4DD8B9");
+        else if(name==='poison') handleChangeColor("purple")
+        else if(name==="fire") handleChangeColor("#ff8000");
+        else if(name==="water") handleChangeColor("#0099ff");
+        else if(name==="bug") handleChangeColor("#333300");
+        else if(name==="dark") handleChangeColor("#003366");
+        else if(name==="electric") handleChangeColor("#F4C947");
+        else if(name==="dragon") handleChangeColor("#ff8000");
+        else if(name==="normal") handleChangeColor("#ff8000");
+        else if(name==="rock") handleChangeColor("#ff8000");
+        else if(name==="fighting") handleChangeColor("#ff8000");
+        else if(name==="ghost") handleChangeColor("#ff8000");
+        else if(name==="psychic") handleChangeColor("#ff8000");
+        else if(name==="ice") handleChangeColor("#ff8000");
     
-    }, []);
+    }, [name]);
     
     return (
         <OutlineType color={color}>

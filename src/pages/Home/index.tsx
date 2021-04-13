@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { Footer } from '../../components/Footer';
 import { Container, FavoriteButton, Header, HeaderDownText, Scroll, HeaderText, PokemonBox, PokemonContent, PokemonImage, PokemonName, PokemonNumber, Types, TypeText, TypeView, TypeViewText, DescriptionView, DescriptionText } from './styles';
-import { Ionicons, EvilIcons, Entypo, FontAwesome5,MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons, EvilIcons ,MaterialCommunityIcons } from '@expo/vector-icons';
 import { PokemonProps } from '../PokeList';
 import api from '../../services/api';
 import { IconPerType } from '../../components/IconPerType';
@@ -15,15 +15,26 @@ interface TypeProps {
     }
  }
 
+ interface FlavorText {
+    flavor_text: string,
+    language: {
+        name: string,
+    },
+    version: {
+        name: string;
+    }
+};
+
 export function Home() {
     const [pokemon, setPokemon] = useState({} as PokemonProps);
     const [types, setTypes] = useState<TypeProps[]>([]);
     const [randomId, setRandomId] = useState(Math.floor(Math.random() * 800 + 1));
     const [colorType, setColorType] = useState('');
+    const [uniqueDescription, setUniqueDescription] = useState('');
 
     useEffect(() => {
-        console.log(randomId);
         getPokemonRandomly();
+        getDetail();
     
     }, [randomId]);
 
@@ -38,6 +49,27 @@ export function Home() {
 
         }
     }    
+
+    async function getDetail () {
+        const response = await api.get(`/pokemon-species/${randomId}`)
+        let obj: string[] = []
+    
+        response.data.flavor_text_entries.map((desc: FlavorText) => (
+          obj.push(desc.version.name)
+        ))
+    
+        /* Pegando a primeira descrição em inglês */
+        for (var i = 0; i < obj.length; i++) {
+          if (response.data.flavor_text_entries[i].language.name === 'en' && response.data.flavor_text_entries[i].version.name === obj[i]) {
+            setUniqueDescription(response.data.flavor_text_entries[i].flavor_text)
+            
+          }
+        }
+      }
+
+    function handleChangeColor(color: string) {
+        setColorType(color);
+    }
     
     return (
         <>
@@ -65,7 +97,7 @@ export function Home() {
                                 <MaterialCommunityIcons 
                                     name="pokeball" 
                                     size={130} 
-                                    color="#6666" 
+                                              color="#6666" 
                                     style={{
                                         position: 'absolute'
                                     }} 
@@ -90,14 +122,14 @@ export function Home() {
 
                             <View style={{ flexDirection: 'row' }}>
                                 { types.map(type => (
-                                    <TypeView color={colorType}>
+                                    <TypeView key={type.type.name} color={colorType ? colorType : "#666"}>
                                         <IconPerType 
                                             name={type.type.name} 
                                             color="#000" 
                                             size={24} 
-                                            setColor={setColorType}
+                                            handleChangeColor={handleChangeColor}
                                         />
-                                        <TypeViewText color={colorType}> 
+                                        <TypeViewText color={colorType ? colorType : "#666"}> 
                                             {capitalizeFirstLetter(type.type.name)}
                                         </TypeViewText>
                                     </TypeView>
@@ -107,10 +139,7 @@ export function Home() {
 
                         <DescriptionView>
                             <DescriptionText>
-                                Bulbasaur pode ser visto  cochilando sob a luz
-                                do sol. Há uma semente nas costas. Ao absorver
-                                os raios do sol, a semente cresce
-                                progressivamente maior.
+                                {uniqueDescription}
                             </DescriptionText>
                         </DescriptionView>
                     </Scroll>

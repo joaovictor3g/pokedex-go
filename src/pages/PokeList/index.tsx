@@ -26,7 +26,7 @@ export function PokeList() {
     
     async function renderPokemons() {
         try {
-            const response = await api.get('/pokemon?offset=0&limit=50')
+            const response = await api.get('/pokemon?offset=0&limit=9')
             setPokemons(response.data.results);
         } catch(err) {
             console.log(err);
@@ -40,7 +40,6 @@ export function PokeList() {
     useEffect(() => {
         renderPokemons();
     }, [isFocused]);
-
 
     return (
         <>

@@ -38,6 +38,11 @@ export function PokemonBox({ color, handleNavigateToDetail, pokemon, index, back
         return word.charAt(0).toUpperCase() + word.slice(1)
     }
 
+    function handleChangeColor(color: string) {
+        setColorType(color);
+    }
+
+
     useEffect(() => {
         getTypes();
         
@@ -60,7 +65,7 @@ export function PokemonBox({ color, handleNavigateToDetail, pokemon, index, back
                 color={"#666"} 
                 name={type.type.name} 
                 size={20} 
-                setColor={setColorType}
+                handleChangeColor={handleChangeColor}
                />   
                 
             )) }
