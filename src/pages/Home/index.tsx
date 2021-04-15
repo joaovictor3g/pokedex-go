@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 import { Footer } from '../../components/Footer';
 import { Container, FavoriteButton, Header, HeaderDownText, Scroll, HeaderText, PokemonBox, PokemonContent, PokemonImage, PokemonName, PokemonNumber, Types, TypeText, TypeView, TypeViewText, DescriptionView, DescriptionText } from './styles';
 import { Ionicons, EvilIcons ,MaterialCommunityIcons } from '@expo/vector-icons';
@@ -87,7 +87,7 @@ export function Home() {
 
                 </Header>
 
-                <PokemonContent>
+                { uniqueDescription && types ? (<PokemonContent>
                     <Scroll showsVerticalScrollIndicator={false}>
                         <PokemonName>{capitalizeFirstLetter(pokemon.name ?? '')}</PokemonName>
 
@@ -142,7 +142,10 @@ export function Home() {
                             </DescriptionText>
                         </DescriptionView>
                     </Scroll>
-                </PokemonContent>
+                </PokemonContent>): 
+                    (<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <ActivityIndicator size="large" color="blue"/>
+                    </View>)}
             </Container>
             <Footer currentPage="home"/>    
             

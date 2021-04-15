@@ -24,20 +24,28 @@ export function PokeList() {
 
     const [nameTypesAndColors, setNameTypesAndColors] = useState(typesInJSON)
     const [pokemonSearched, setPokemonSearched] = useState('');
-    const [limit, setLimit] = useState(8);
+    const [limit, setLimit] = useState(1);
     const [offset, setOffset] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
+    const [colorType, setColorType] = useState('');
 
     async function renderPokemons() {
+        if(isLoading)  return;
         try {
+            setIsLoading(true);
             const response = await api.get(`/pokemon?offset=${offset}&limit=${limit}`)
-            setPokemons(response.data.results);
-            renderMorePokemons();
+        
+            setPokemons([...pokemons, ...response.data.results]);
+            
+            setOffset(offset+limit);
+            // setLimit(limit+offset);
+            setIsLoading(false);
+            
+            
         } catch(err) {
             console.log(err);
         }
     }
-
-
 
     function handleNavigateToDetail(id: number) {
         navigate('/pokelist/detail', { id });
@@ -52,7 +60,8 @@ export function PokeList() {
 
     useEffect(() => {
         renderPokemons();
-    }, [isFocused]);
+        
+    }, []);
 
     const Pokemon: ListRenderItem<PokemonProps> = ({ item, index, separators }) => {
         return(
@@ -78,13 +87,15 @@ export function PokeList() {
         );
     }
 
-    const Loading = () => (
-        <ActivityIndicator size="small" color="blue"/>
-    );
+    const Loading = () => {
+        if(!isLoading) 
+            return null;
+        return  <ActivityIndicator size="small" color="blue"/>
+    };
 
     function renderMorePokemons() {
         setLimit(limit+2);
-        // setOffset(offset+2);
+       //s setOffset(offset+2);
     }
 
     return (
@@ -149,6 +160,8 @@ export function PokeList() {
                     onEndReachedThreshold={0.02}
                     ListFooterComponent={Loading}
                     numColumns={2}
+                
+                    
                 />
             </PokemonContainer>
             

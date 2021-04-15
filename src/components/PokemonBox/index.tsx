@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { PokemonViewBox, PokemonImage, PokemonName, OutlineType } from './styles';
 import { PokemonProps } from '../../pages/PokeList';
 import { IconPerType } from '../IconPerType';
@@ -15,6 +15,8 @@ interface PokemonBoxProps {
     background?: string;
     padding?: number;
     imageSize?:number;
+    setColorType?: Dispatch<SetStateAction<string>>;
+    colorType?:string;
 }
 
 interface TypeProps {
@@ -32,7 +34,8 @@ export function PokemonBox({
     background, 
     width,
     padding,
-    imageSize
+    imageSize,
+    
 }: PokemonBoxProps) {
     const [types, setTypes] = useState<TypeProps[]>([]);
     const [colorType, setColorType] = React.useState<string>('');
@@ -59,7 +62,7 @@ export function PokemonBox({
     
     return(
         <PokemonViewBox 
-            background={background ? background : colorType} 
+            background={background ? background : (colorType ?? "#666")} 
             onPress={()=>handleNavigateToDetail(index)}
             width={width}
             padding={padding}
@@ -70,9 +73,9 @@ export function PokemonBox({
             >{capitalizeFirstLetter(pokemon.name)}</PokemonName>
             
             
-            { types.map(type => (
+            { types.map((type, idx: number) => (
                <IconPerType 
-                key={type.type.name} 
+                key={idx} 
                 color={"#666"} 
                 name={type.type.name} 
                 size={20} 
