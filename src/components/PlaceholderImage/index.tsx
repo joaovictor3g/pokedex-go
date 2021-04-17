@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { View, Animated, Image } from 'react-native';
 
 interface PlaceholderImageProps {
@@ -6,28 +6,30 @@ interface PlaceholderImageProps {
 }
 
 export function PlaceholderImage({ imageUrl }: PlaceholderImageProps) {
-    const [opacity, setOpacity] = useState(new Animated.Value(0));
+    const opacity = useRef(new Animated.Value(0)).current;
 
-    const onLoad = (event: any) => {
+    const onLoad = () => {
         Animated.timing(opacity, {
             toValue: 1,
             duration: 300,
-            useNativeDriver: true
+            useNativeDriver: false
         }).start()
-    }
+    };
 
     return(
         <View
             style={{ 
-                backgroundColor: '#EEE',
+                backgroundColor: 'transparent',
+                width: '100%',
+                height: '100%'
             }}
         >
             <Image 
-                source={{ uri: imageUrl }}
+                source={require('../../../assets/favicon.png')}
             />
 
             <Animated.Image
-                source={{ uri: imageUrl }}
+                source={{ uri: "https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/001.png" }}
                 style={[
                     { position: 'absolute', opacity }
                 ]}
