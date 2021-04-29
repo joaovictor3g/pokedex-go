@@ -9,6 +9,8 @@ import { IconPerType } from '../../components/IconPerType';
 import { capitalizeFirstLetter } from '../../utils/capitalizeFirstLetter';
 import { Loading } from '../../components/Loading';
 import { savePokemon } from '../../libs/storage';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { DrawerActions, useNavigation } from '@react-navigation/native';
 
 interface TypeProps {
     type: {
@@ -85,6 +87,12 @@ export function Home() {
             console.log(err);
         }
     }
+
+    const navigation = useNavigation();
+
+    // function handleOpenDrawerMenu() {
+    //     navigation.dispatch(DrawerActions.openDrawer());
+    // }
     
     return (
         <>
@@ -99,7 +107,9 @@ export function Home() {
                             Seu pokemon do dia
                         </HeaderDownText>
                     </View>
-                    <Ionicons name="menu" size={30} color="black" />
+                    {/* <TouchableOpacity onPress={handleOpenDrawerMenu}>
+                        <Ionicons name="menu" size={30} color="black" />
+                    </TouchableOpacity> */}
 
                 </Header>
 

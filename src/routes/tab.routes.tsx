@@ -1,18 +1,16 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createSwitchNavigator } from 'react-navigation';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createDrawerNavigator } from '@react-navigation/drawer';
 
-import { Login } from './pages/Login';
-import { Home } from './pages/Home'
-import { PokeList } from './pages/PokeList';
-import { Favorites } from './pages/Favorites';
-import { Profile } from './pages/Profile';
-import { PokemonDetail } from './pages/PokemonDetail';
+import { Login } from '../pages/Login';
+import { Home } from '../pages/Home'
+import { PokeList } from '../pages/PokeList';
+import { Favorites } from '../pages/Favorites';
+import { Profile } from '../pages/Profile';
+import { PokemonDetail } from '../pages/PokemonDetail';
+import HomeDrawer from './drawer.routes';
 
 const Tab = createBottomTabNavigator();
-const Drawer = createDrawerNavigator();
 
 export function Routes(){
     return (

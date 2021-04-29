@@ -13,9 +13,7 @@ export const PokemonViewBox = styled.View<PokemonBoxProps>`
     height: 120px;
     background:${props => props.background ? props.background: "#666"};
     border-radius: 10px;
-    /* margin: 1px; */
-    /* margin-bottom: 20px; */
-    padding: ${props => props.padding ? `${props.padding}px`: `${5}px`};
+    padding: 10px;
 `;
 
 export const PokemonName = styled.Text<PokemonBoxProps>`

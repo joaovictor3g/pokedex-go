@@ -64,30 +64,6 @@ export function PokeList() {
         
     }, []);
 
-    const Pokemon: ListRenderItem<PokemonProps> = ({ item, index, separators }) => {
-        return(
-            <PokemonBox 
-                key={item.name}
-                background=""
-                color={color}
-                handleNavigateToDetail={handleNavigateToDetail}
-                index={index+1}
-                pokemon={item}
-            />
-            
-        )
-    }
-
-    const renderItem: ListRenderItem<PokemonProps> = ({ item, index, separators }) => {
-        return (    
-            <Pokemon
-                item={item}
-                index={index}
-                separators={separators}
-            />
-        );
-    }
-
     const Loading = () => {
         if(!isLoading) 
             return null;
@@ -129,7 +105,16 @@ export function PokeList() {
                             style={{ flex: 1 }}
                             contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}
                             data={pokemons}
-                            renderItem={renderItem}
+                            renderItem={({ item, index }) => (
+                                <PokemonBox 
+                                    key={item.name}
+                                    background=""
+                                    color={color}
+                                    handleNavigateToDetail={handleNavigateToDetail}
+                                    index={index+1}
+                                    pokemon={item}
+                                />
+                            )}
                             keyExtractor={item => item.name}
                             onEndReached={renderPokemons}
                             onEndReachedThreshold={0.02}

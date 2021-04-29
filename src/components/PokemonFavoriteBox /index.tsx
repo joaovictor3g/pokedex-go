@@ -47,7 +47,7 @@ export function PokemonFavoriteBox({
     const [colorType, setColorType] = useState<string>('');
     
     async function getTypes() {
-        const response = await api.get(`${pokemon.url}`);
+        const response = await api.get(`pokemon/${pokemon.id}`);
     
         setTypes(response.data.types.reverse());
     }
@@ -61,10 +61,10 @@ export function PokemonFavoriteBox({
     }
 
 
-    // useEffect(() => {
-    //     getTypes();
+    useEffect(() => {
+        getTypes();
         
-    // }, []);
+    }, []);
     
     return(
         <Swipeable
@@ -135,13 +135,27 @@ export function PokemonFavoriteBox({
                 
                 
                 { types.map((type, idx: number) => (
-                <IconPerType 
-                    key={idx} 
-                    color={"#666"} 
-                    name={type.type.name} 
-                    size={20} 
-                    handleChangeColor={handleChangeColor}
-                />   
+                    <View
+                        key={idx} 
+                        style={{
+                            width: 30,
+                            height: 30,
+                            borderRadius: 100,
+                            borderWidth:1,
+                            borderColor: '#ddd',
+                            marginTop: 5,
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}
+                    >
+                        <IconPerType 
+                            
+                            color={"#666"} 
+                            name={type.type.name} 
+                            size={20} 
+                            handleChangeColor={handleChangeColor}
+                        />   
+                    </View>
                     
                 )) }
                 

@@ -78,7 +78,10 @@ export function Favorites() {
 
                 <PokemonContainer>
                     <ScrollView 
-                        showsVerticalScrollIndicator={false}>
+                        showsVerticalScrollIndicator={false}
+                        style={{ flex: 1 }}
+                        contentContainerStyle={{ width: '100%' }}
+                    >
                         {pokemons.map((pokemon) => (
                             <View
                                 key={pokemon.name}

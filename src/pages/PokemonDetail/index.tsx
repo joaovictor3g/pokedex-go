@@ -205,7 +205,7 @@ export function PokemonDetail(){
                             <HeaderButton onPress={handleGoBack}>
                                 <Ionicons name="arrow-back" size={30} color="#fff" />
                             </HeaderButton>
-                            <HeaderButton onPress={handleAddPokemonToFavorite}>
+                            <HeaderButton disabled={isFavButtonClicked} onPress={handleAddPokemonToFavorite}>
                                 <MaterialIcons name="favorite-border" size={30} color="#fff" />
                             </HeaderButton>
                         </BackFavButtonsView>

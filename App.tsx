@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes } from './src/routes';
+import { Routes } from './src/routes/tab.routes';
 import { ThemeProvider } from 'styled-components/native';
 
 export interface Colors {
@@ -17,9 +17,6 @@ const globalColors = {
   gray: "#F1F1F1",
   blue: "#48A9E0",
 };
-
-
-
 
 export default function App() {
   return (

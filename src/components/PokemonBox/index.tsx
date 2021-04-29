@@ -5,6 +5,7 @@ import { IconPerType } from '../IconPerType';
 import api from '../../services/api';
 
 import typesInJSON from '../../../types.json';
+import { View } from 'react-native';
 
 interface PokemonBoxProps {
     pokemon: PokemonProps;
@@ -55,10 +56,10 @@ export function PokemonBox({
     }
 
 
-    // useEffect(() => {
-    //     getTypes();
+    useEffect(() => {
+        getTypes();
         
-    // }, []);
+    }, []);
     
     return(
         <PokemonViewBox 
@@ -74,13 +75,25 @@ export function PokemonBox({
             
             
             { types.map((type, idx: number) => (
-               <IconPerType 
+              <View 
                 key={idx} 
-                color={"#666"} 
-                name={type.type.name} 
-                size={20} 
-                handleChangeColor={handleChangeColor}
-               />   
+                style={{
+                  backgroundColor: '#FFF',
+                  borderRadius: 100,
+                  width: 30,
+                  height: 30,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginTop: 5
+              }}>
+                   <IconPerType 
+                        
+                        color={"#666"} 
+                        name={type.type.name} 
+                        size={20} 
+                        handleChangeColor={handleChangeColor}
+                    />   
+              </View>
                 
             )) }
             
