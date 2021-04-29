@@ -22,7 +22,6 @@ export function Favorites() {
 
     return (
         <>
-            <StatusBar barStyle="dark-content"/>
             <Container>
                 <Header>
                     <Text

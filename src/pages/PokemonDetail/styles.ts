@@ -17,6 +17,7 @@ export const Container = styled.View`
 export const BackFavButtonsView = styled.View`
     flex-direction: row;
     justify-content: space-between;
+    margin-top: 20px;
 `;
 
 export const HeaderButton = styled.TouchableOpacity`

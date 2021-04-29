@@ -44,6 +44,7 @@ export const ProfileImage = styled.Image`
     height: 150px;
     position: absolute;
     top:30px;
+    /* border-radius: 100px; */
     border-width: 10px;
     border-color: #48A9E0; 
 `;

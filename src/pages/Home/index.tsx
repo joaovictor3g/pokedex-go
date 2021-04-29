@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { View } from 'react-native';
 import { Footer } from '../../components/Footer';
 import { Container, FavoriteButton, Header, HeaderDownText, Scroll, HeaderText, PokemonBox, PokemonContent, PokemonImage, PokemonName, PokemonNumber, Types, TypeText, TypeView, TypeViewText, DescriptionView, DescriptionText } from './styles';
 import { Ionicons, EvilIcons ,MaterialCommunityIcons } from '@expo/vector-icons';
@@ -7,6 +7,7 @@ import { PokemonProps } from '../PokeList';
 import api from '../../services/api';
 import { IconPerType } from '../../components/IconPerType';
 import { capitalizeFirstLetter } from '../../utils/capitalizeFirstLetter';
+import { Loading } from '../../components/Loading';
 
 interface TypeProps {
     type: {
@@ -87,7 +88,8 @@ export function Home() {
 
                 </Header>
 
-                { uniqueDescription && types ? (<PokemonContent>
+                { (uniqueDescription && types) ? (
+                <PokemonContent>
                     <Scroll showsVerticalScrollIndicator={false}>
                         <PokemonName>{capitalizeFirstLetter(pokemon.name ?? '')}</PokemonName>
 
@@ -144,7 +146,7 @@ export function Home() {
                     </Scroll>
                 </PokemonContent>): 
                     (<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <ActivityIndicator size="large" color="blue"/>
+                        <Loading />
                     </View>)}
             </Container>
             <Footer currentPage="home"/>    

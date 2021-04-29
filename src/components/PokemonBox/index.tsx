@@ -38,7 +38,7 @@ export function PokemonBox({
     
 }: PokemonBoxProps) {
     const [types, setTypes] = useState<TypeProps[]>([]);
-    const [colorType, setColorType] = React.useState<string>('');
+    const [colorType, setColorType] = useState<string>('');
     
     async function getTypes() {
         const response = await api.get(`${pokemon.url}`);
@@ -55,10 +55,10 @@ export function PokemonBox({
     }
 
 
-    useEffect(() => {
-        getTypes();
+    // useEffect(() => {
+    //     getTypes();
         
-    }, []);
+    // }, []);
     
     return(
         <PokemonViewBox 

@@ -8,6 +8,7 @@ import { ActivityIndicator, View } from 'react-native';
 import { IconPerType } from '../../components/IconPerType';
 import { MaterialCommunityIcons, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import typesInJSON from '../../../types.json';
+import { Loading } from '../../components/Loading';
 
 interface TypeProps {
     type: {
@@ -56,7 +57,7 @@ export function PokemonDetail(){
     const [stats, setStats] = useState<StatsProps[]>([]);
     const [btnSelected, setBtnSelected] = useState('stats');
     const [uniqueDescription, setUniqueDescription] = useState([]);
-
+    const [isLoading, setIsLoading] = useState(true);
     const [pokemon, setPokemon] = useState({} as PokemonProps);
     const nameTypesAndColors = typesInJSON;
 
@@ -82,6 +83,7 @@ export function PokemonDetail(){
       }
 
     async function getInfoPokemon() {
+        // setIsLoading(true)
         try {
             const res = await api.get(`/pokemon/${id}`)
             setPokemon(res.data);
@@ -91,20 +93,21 @@ export function PokemonDetail(){
             setSerializedTypes(res.data.types.map((type: TypeProps) => type.type.name));
 
             let arr: string[] = [];
-            
-
+        
             res.data.types.map((serializedType: TypeProps) => {
                 nameTypesAndColors.map(nameTypeAndColor => {
                     if(serializedType.type.name === nameTypeAndColor.name) {
-                        console.log("entrou")
+                        // console.log("entrou")
                         arr.push(nameTypeAndColor.color)
                         
                     }
                 })
             });
-            console.log(arr);
+            // console.log(arr);
             setColors(arr);
             getDetail();
+
+            setIsLoading(false);
             
         } catch(err) {
 
@@ -112,12 +115,7 @@ export function PokemonDetail(){
     }
     useEffect(() => {
         getInfoPokemon()
-        
     }, [isFocused]);
-    
-    function getColors() {
-        
-    }
 
     const navigation = useNavigation();
 
@@ -145,12 +143,23 @@ export function PokemonDetail(){
         setColorType(color);
     }
 
-   
+    if(isLoading) {
+        return  (
+            <View style={{ 
+                flex: 1, 
+                justifyContent: 'center', 
+                alignItems: 'center',
+                backgroundColor: '#FFF' 
+            }}>
+                <Loading />
+            </View>
+        );
+    }
+
     return (
         <>
             <Container>
-                {(name && types.length>0 && stats.length>0 && colors.length>0 && serializedTypes.length>0) ?
-                (<PokemonView color={colors ? colors[0] : "#666"}>
+              <PokemonView color={colors ? colors[0] : "#666"}>
                     <PokemonProfile>
                         <MaterialCommunityIcons 
                             name="pokeball" 
@@ -282,12 +291,7 @@ export function PokemonDetail(){
                         }
                         {/* {btnSelected==="evolution" && <Evolutions id={id}/>} */}
                     </PokemonInfoBox>
-                </PokemonView>)
-                : 
-                    (<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <ActivityIndicator size="large" color="blue"/>
-                    </View>)}
-
+                </PokemonView>
             </Container>
             <Footer currentPage="pokelist"/>
         </>

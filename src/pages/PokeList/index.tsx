@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { Footer } from '../../components/Footer';
+import { SearchPokemon } from '../../components/SearchPokemon';
 import api from '../../services/api';
 import { Button, Container, GroupButton, PokemonContainer, Scroll, Search, TextButton, TypeContainer } from './styles';
 import { FlatList, ListRenderItem } from 'react-native';
@@ -14,7 +15,6 @@ export interface PokemonProps {
     url: string;
 }
 
-
 export function PokeList() {
     const [pokemons, setPokemons] = useState<PokemonProps[]>([]);
     const [color, setColor] = useState('');
@@ -24,10 +24,12 @@ export function PokeList() {
 
     const [nameTypesAndColors, setNameTypesAndColors] = useState(typesInJSON)
     const [pokemonSearched, setPokemonSearched] = useState('');
-    const [limit, setLimit] = useState(1);
+    const [limit, setLimit] = useState(8);
     const [offset, setOffset] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const [colorType, setColorType] = useState('');
+
+    const [isButtonSearchPressed, setIsButtonSearchPressed] = useState(false);
 
     async function renderPokemons() {
         if(isLoading)  return;
@@ -51,10 +53,8 @@ export function PokeList() {
         navigate('/pokelist/detail', { id });
     }
 
-    async function handleSearchPokemon() {
-        const response = await api.get(`/pokemon/${pokemonSearched}`);
-
-        setPokemons(response.data);
+    function handleSearchPokemon() {
+        setIsButtonSearchPressed(true);
         
     }
 
@@ -93,11 +93,6 @@ export function PokeList() {
         return  <ActivityIndicator size="small" color="blue"/>
     };
 
-    function renderMorePokemons() {
-        setLimit(limit+2);
-       //s setOffset(offset+2);
-    }
-
     return (
         <>
             <Container>
@@ -107,7 +102,9 @@ export function PokeList() {
                     placeholder="Pesquisar"
 
                 />
-                <Button onPress={handleSearchPokemon}><TextButton>ir</TextButton></Button>
+                <Button onPress={handleSearchPokemon}>
+                    <TextButton>ir</TextButton>
+                </Button>
             
                 <GroupButton>
                     <Button 
@@ -123,50 +120,38 @@ export function PokeList() {
                         <TextButton>Tipos</TextButton>
                     </Button>
                 </GroupButton>
-                {/* {pokemons.length>0 ? <Scroll showsVerticalScrollIndicator={false}>
-                    {buttonSelected==='pokemons' && 
-                        <PokemonContainer>
-                        { pokemons && pokemons.map((pokemon: PokemonProps, index: number) => { 
-                            return(
-                                <PokemonBox 
-                                    key={pokemon.name}
-                                    background=""
-                                    color={color}
-                                    handleNavigateToDetail={handleNavigateToDetail}
-                                    index={index+1}
-                                    pokemon={pokemon}
-                                />
-                            )
-                        }) }
-        
-                    </PokemonContainer>}
-                    
+                
+                { (buttonSelected==='pokemons') && 
+                    <PokemonContainer>
+                        {!isButtonSearchPressed ? 
+                        <FlatList 
+                            style={{ flex: 1 }}
+                            contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}
+                            data={pokemons}
+                            renderItem={renderItem}
+                            keyExtractor={item => item.name}
+                            onEndReached={renderPokemons}
+                            onEndReachedThreshold={0.02}
+                            ListFooterComponent={Loading}
+                            numColumns={2}
+
+
+                        /> : 
+                        <SearchPokemon pokemonSearched={pokemonSearched}/>}
+                    </PokemonContainer>
+                }
+
+                <Scroll showsVerticalScrollIndicator={false}>
                     <TypeContainer>
                         { buttonSelected==='types' && 
                             nameTypesAndColors.map(type => (
                             <TypeList key={type._id} nameType={type.name} color={type.color}/>
                         ))}
                     </TypeContainer>
-                </Scroll> : <ActivityIndicator size="small" color="blue"/>} */}
-            
-            <PokemonContainer>
-                <FlatList 
-                    style={{ flex: 1 }}
-                    contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}
-                    data={pokemons}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.name}
-                    onEndReached={renderPokemons}
-                    onEndReachedThreshold={0.02}
-                    ListFooterComponent={Loading}
-                    numColumns={2}
-                
-                    
-                />
-            </PokemonContainer>
-            
+                </Scroll>
+                 {/* : <ActivityIndicator size="small" color="blue"/>} */}
+        
             </Container>
-
             <Footer currentPage="pokelist"/>
         </>
     );
