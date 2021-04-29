@@ -5,10 +5,10 @@ import { Feather } from '@expo/vector-icons';
 import { StatusBar } from 'react-native';
 
 import { PokemonProps } from '../PokeList';
-import { PokemonBox } from '../../components/PokemonBox';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { getPokemonsAddedToFavorites } from '../../libs/storage';
+import { PokemonFavoriteBox } from '../../components/PokemonFavoriteBox ';
 
 export function Favorites() {
     const [pokemons, setPokemons] = useState<PokemonProps[]>([]);
@@ -51,7 +51,7 @@ export function Favorites() {
                 <PokemonContainer>
                     <ScrollView showsVerticalScrollIndicator={false}>
                         {pokemons.map((pokemon, idx: number) => (
-                            <PokemonBox 
+                            <PokemonFavoriteBox 
                                 key={pokemon.name}
                                 padding={20}
                                 background="#fff"
