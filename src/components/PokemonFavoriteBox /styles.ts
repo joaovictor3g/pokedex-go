@@ -8,13 +8,13 @@ interface PokemonBoxProps {
     imageSize?:number;
 }
 
-export const PokemonViewBox = styled.TouchableOpacity<PokemonBoxProps>`
-    width: ${props => props.width ? `${props.width}%` : `${150}px`};
+export const PokemonViewBox = styled.View<PokemonBoxProps>`
+    width: 100%;
     height: 120px;
     background:${props => props.background ? props.background: "#666"};
     border-radius: 10px;
-    margin: 2px;
-    margin-bottom: 20px;
+    /* margin: 1px; */
+    /* margin-bottom: 20px; */
     padding: ${props => props.padding ? `${props.padding}px`: `${5}px`};
 `;
 
@@ -35,9 +35,8 @@ export const OutlineType = styled.View<PokemonBoxProps>`
 `;
 
 export const PokemonImage = styled.Image<PokemonBoxProps>`
-    width: ${props => props.imageSize ? `${props.imageSize}px` : `${80}px`};
-    height: ${props => props.imageSize ? `${props.imageSize}px` : `${80}px`};
     position: absolute;
-    bottom: -10px;
     right: 10px;
+    width: 80px;
+    height: 80px;
 `;

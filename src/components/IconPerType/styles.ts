@@ -10,5 +10,5 @@ export const OutlineType = styled.View<OutlineProps>`
     height: 30px;
     justify-content: center;
     align-items: center;
-    background: #fff;
+
 `;

@@ -1,10 +1,15 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { PokemonViewBox, PokemonImage, PokemonName, OutlineType } from './styles';
+import { RectButton } from 'react-native-gesture-handler';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+
 import { PokemonProps } from '../../pages/PokeList';
 import { IconPerType } from '../IconPerType';
 import api from '../../services/api';
+import { Feather, Ionicons } from '@expo/vector-icons';
 
 import typesInJSON from '../../../types.json';
+import { Animated, View } from 'react-native';
 
 interface PokemonBoxProps {
     pokemon: PokemonProps;
@@ -17,6 +22,7 @@ interface PokemonBoxProps {
     imageSize?:number;
     setColorType?: Dispatch<SetStateAction<string>>;
     colorType?:string;
+    handleRemovePokemon: () => void;
 }
 
 interface TypeProps {
@@ -35,7 +41,7 @@ export function PokemonFavoriteBox({
     width,
     padding,
     imageSize,
-    
+    handleRemovePokemon
 }: PokemonBoxProps) {
     const [types, setTypes] = useState<TypeProps[]>([]);
     const [colorType, setColorType] = useState<string>('');
@@ -61,33 +67,89 @@ export function PokemonFavoriteBox({
     // }, []);
     
     return(
-        <PokemonViewBox 
-            background={background ? background : (colorType ?? "#666")} 
-            onPress={()=>handleNavigateToDetail(index)}
-            width={width}
-            padding={padding}
-            imageSize={imageSize}
-        >         
-            <PokemonName
-                color={color}
-            >{capitalizeFirstLetter(pokemon.name)}</PokemonName>
-            
-            
-            { types.map((type, idx: number) => (
-               <IconPerType 
-                key={idx} 
-                color={"#666"} 
-                name={type.type.name} 
-                size={20} 
-                handleChangeColor={handleChangeColor}
-               />   
+        <Swipeable
+            containerStyle={{
                 
-            )) }
-            
+            }}
+            overshootLeft={false}
+            overshootRight={false}
+            renderLeftActions={()=>(
+                <Animated.View style={{
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}>
+                    <View >
+                        <RectButton
+                            style={{
+                                width: 100,
+                                height: 120,
+                                backgroundColor: "blue",
+                                
+                                borderRadius: 20,
+                                justifyContent: 'center',
+                                position: 'relative',
+                                left: 20,
+                                
+                                alignItems: 'center'
+                            }}
+                            onPress={()=>handleNavigateToDetail(index)}
+                        >
+                            <Ionicons name="ios-information-circle" size={34} color="#FFF" />
+                        </RectButton>
+                    </View>
+                </Animated.View>
+            )}
+            renderRightActions={() => (
+                <Animated.View style={{
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}>
+                    <View >
+                        <RectButton
+                            style={{
+                                width: 100,
+                                height: 120,
+                                backgroundColor: "red",
+                                borderRadius: 20,
+                                justifyContent: 'center',
+                                position: 'relative',
+                                right: 20,
+                                alignItems: 'center'
+                            }}
+                            onPress={handleRemovePokemon}
+                        >
+                            <Feather name="trash" size={24} color="#FFF"/>
+                        </RectButton>
+                    </View>
+                </Animated.View>
+            )}>
+            <PokemonViewBox 
+                background={background ? background : (colorType ?? "#666")} 
+                width={width}
+                padding={padding}
+                imageSize={imageSize}
+            >         
+                <PokemonName
+                    color={color}
+                >{capitalizeFirstLetter(pokemon.name)}</PokemonName>
+                
+                
+                { types.map((type, idx: number) => (
+                <IconPerType 
+                    key={idx} 
+                    color={"#666"} 
+                    name={type.type.name} 
+                    size={20} 
+                    handleChangeColor={handleChangeColor}
+                />   
+                    
+                )) }
+                
 
-            { index < 10 && <PokemonImage source={{ uri: `https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/00${index}.png`}}/> }
-            { index >= 10 && index <100 && <PokemonImage source={{ uri: `https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/0${index}.png`}}/> }
-            { index >= 100 &&  <PokemonImage source={{ uri: `https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/${index}.png`}}/>}
-        </PokemonViewBox>
+                { index < 10 && <PokemonImage source={{ uri: `https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/00${index}.png`}} resizeMode="contain"/> }
+                { index >= 10 && index <100 && <PokemonImage source={{ uri: `https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/0${index}.png`}} resizeMode="contain"/> }
+                { index >= 100 &&  <PokemonImage source={{ uri: `https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/${index}.png`}} resizeMode="contain" />}
+            </PokemonViewBox>
+        </Swipeable>
     );
 }
