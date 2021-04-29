@@ -27,6 +27,7 @@ export const Text = styled.Text<TextDefault>`
 `;
 
 export const PokemonContainer = styled.View`
+    flex: 1;
     width: 100%;
     padding: 20px;
     height: 100%;

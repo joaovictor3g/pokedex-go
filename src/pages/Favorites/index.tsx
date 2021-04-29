@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Footer } from '../../components/Footer';
 import { Container, Header, Text, PokemonContainer } from './styles';
 import { Feather } from '@expo/vector-icons';
@@ -8,17 +8,31 @@ import { PokemonProps } from '../PokeList';
 import { PokemonBox } from '../../components/PokemonBox';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { getPokemonsAddedToFavorites } from '../../libs/storage';
 
 export function Favorites() {
-    const [pokemons, setPokemons] = useState<PokemonProps[]>([
-        { name: 'Bulbasaur', url: 'https://pokeapi.co/api/v2/pokemon/1' }
-    ]);
+    const [pokemons, setPokemons] = useState<PokemonProps[]>([]);
 
     const { navigate } = useNavigation();
     
     function handleNavigateToDetail(id: number) {
         navigate('/pokelist/detail', { id });
     }
+
+    async function getFavoritePokemons() {
+        try {
+            const favoritePokemons = await getPokemonsAddedToFavorites();
+
+            setPokemons(favoritePokemons.data);    
+
+        } catch(err) {
+            console.log(err);
+        }   
+    }
+
+    useEffect(() => {
+        getFavoritePokemons();
+    }, [])
 
     return (
         <>
@@ -36,27 +50,19 @@ export function Favorites() {
 
                 <PokemonContainer>
                     <ScrollView showsVerticalScrollIndicator={false}>
-                        <PokemonBox 
-                            padding={20}
-                            background="#fff"
-                            color="#000"
-                            index={1}
-                            pokemon={pokemons[0]}
-                            handleNavigateToDetail={handleNavigateToDetail}
-                            width={100}
-                            imageSize={200}
-                        />
-
-                        <PokemonBox 
-                            padding={20}
-                            background="#fff"
-                            color="#000"
-                            index={1}
-                            pokemon={pokemons[0]}
-                            handleNavigateToDetail={handleNavigateToDetail}
-                            width={100}
-                            imageSize={200}
-                        />
+                        {pokemons.map((pokemon, idx: number) => (
+                            <PokemonBox 
+                                key={pokemon.name}
+                                padding={20}
+                                background="#fff"
+                                color="#000"
+                                index={pokemon.id ?? 1}
+                                pokemon={pokemon}
+                                handleNavigateToDetail={handleNavigateToDetail}
+                                width={100}
+                                imageSize={200}
+                            />
+                        ))}
                     </ScrollView>
                 </PokemonContainer>
             </Container>

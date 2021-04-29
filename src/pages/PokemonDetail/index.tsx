@@ -9,6 +9,7 @@ import { IconPerType } from '../../components/IconPerType';
 import { MaterialCommunityIcons, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import typesInJSON from '../../../types.json';
 import { Loading } from '../../components/Loading';
+import { savePokemon } from '../../libs/storage';
 
 interface TypeProps {
     type: {
@@ -59,6 +60,7 @@ export function PokemonDetail(){
     const [uniqueDescription, setUniqueDescription] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [pokemon, setPokemon] = useState({} as PokemonProps);
+    const [isFavButtonClicked, setIsFavButtonClicked] = useState(false);
     const nameTypesAndColors = typesInJSON;
 
     function capitalizeFirstLetter (word: string) {
@@ -85,16 +87,21 @@ export function PokemonDetail(){
     async function getInfoPokemon() {
         // setIsLoading(true)
         try {
-            const res = await api.get(`/pokemon/${id}`)
-            setPokemon(res.data);
-            setName(res.data.name);
-            setTypes(res.data.types);
-            setStats(res.data.stats);
-            setSerializedTypes(res.data.types.map((type: TypeProps) => type.type.name));
+            const { name: PokemonApiName, types: apiTypes, stats: ApiStats } = (await api.get(`/pokemon/${id}`)).data;
+            
+            setPokemon({
+                name: PokemonApiName,
+                id
+            });
+
+            setName(PokemonApiName);
+            setTypes(apiTypes);
+            setStats(ApiStats);
+            setSerializedTypes(apiTypes.map((type: TypeProps) => type.type.name));
 
             let arr: string[] = [];
         
-            res.data.types.map((serializedType: TypeProps) => {
+            apiTypes.map((serializedType: TypeProps) => {
                 nameTypesAndColors.map(nameTypeAndColor => {
                     if(serializedType.type.name === nameTypeAndColor.name) {
                         // console.log("entrou")
@@ -113,6 +120,17 @@ export function PokemonDetail(){
 
         }
     }
+
+    function handleAddPokemonToFavorite() {
+        try {
+            savePokemon(pokemon);
+
+            setIsFavButtonClicked(true);
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
     useEffect(() => {
         getInfoPokemon()
     }, [isFocused]);
@@ -187,7 +205,7 @@ export function PokemonDetail(){
                             <HeaderButton onPress={handleGoBack}>
                                 <Ionicons name="arrow-back" size={30} color="#fff" />
                             </HeaderButton>
-                            <HeaderButton>
+                            <HeaderButton onPress={handleAddPokemonToFavorite}>
                                 <MaterialIcons name="favorite-border" size={30} color="#fff" />
                             </HeaderButton>
                         </BackFavButtonsView>

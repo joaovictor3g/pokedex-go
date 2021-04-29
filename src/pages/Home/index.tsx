@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { Footer } from '../../components/Footer';
 import { Container, FavoriteButton, Header, HeaderDownText, Scroll, HeaderText, PokemonBox, PokemonContent, PokemonImage, PokemonName, PokemonNumber, Types, TypeText, TypeView, TypeViewText, DescriptionView, DescriptionText } from './styles';
-import { Ionicons, EvilIcons ,MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons, EvilIcons ,MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 import { PokemonProps } from '../PokeList';
 import api from '../../services/api';
 import { IconPerType } from '../../components/IconPerType';
 import { capitalizeFirstLetter } from '../../utils/capitalizeFirstLetter';
 import { Loading } from '../../components/Loading';
+import { savePokemon } from '../../libs/storage';
 
 interface TypeProps {
     type: {
@@ -32,6 +33,7 @@ export function Home() {
     const [randomId, setRandomId] = useState(Math.floor(Math.random() * 800 + 1));
     const [colorType, setColorType] = useState('');
     const [uniqueDescription, setUniqueDescription] = useState('');
+    const [isFavButtonClicked, setIsFavButtonClicked] = useState(false);
 
     useEffect(() => {
         getPokemonRandomly();
@@ -41,10 +43,13 @@ export function Home() {
 
     async function getPokemonRandomly() {
         try {
-            const response = await api.get(`/pokemon/${randomId}`);
+            const { name, types } = (await api.get(`/pokemon/${randomId}`)).data;
 
-            setPokemon(response.data);
-            setTypes(response.data.types)
+            setPokemon({
+                name, 
+                id: randomId
+            });
+            setTypes(types)
         } catch(err) {
 
         }
@@ -69,6 +74,16 @@ export function Home() {
 
     function handleChangeColor(color: string) {
         setColorType(color);
+    }
+
+    function handleAddPokemonToFavorite() {
+        try {
+            savePokemon(pokemon);
+
+            setIsFavButtonClicked(true);
+        } catch(err) {
+            console.log(err);
+        }
     }
     
     return (
@@ -106,8 +121,24 @@ export function Home() {
                                 <PokemonNumber>
                                     Nº {randomId}
                                 </PokemonNumber>
-                                <FavoriteButton>
-                                    <EvilIcons name="heart" size={35} color="#fff" />
+                                
+                                <FavoriteButton
+                                    onPress={handleAddPokemonToFavorite}
+                                    
+                                >
+                                    { isFavButtonClicked ? 
+                                        (<AntDesign 
+                                            name="heart" 
+                                            size={35} 
+                                            color="#FFF" 
+                                        />)
+                                        : 
+                                        (<EvilIcons 
+                                            name="heart" 
+                                            size={35} 
+                                            color="#fff" 
+                                    
+                                        />)}
                                 </FavoriteButton>
 
                             </View>

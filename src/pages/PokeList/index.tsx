@@ -12,7 +12,8 @@ import { ActivityIndicator } from 'react-native';
 
 export interface PokemonProps {
     name: string;
-    url: string;
+    url?: string;
+    id?:number;
 }
 
 export function PokeList() {
