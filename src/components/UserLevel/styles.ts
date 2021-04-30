@@ -29,8 +29,16 @@ export const Title = styled.Text`
     width: 100%;
 `;
 
+export const IncrementedProgress = styled.View`
+    height: 10px;
+`;
+
 export const LevelNumber = styled.Text``;
 
-export const TextXp = styled.Text``;
+export const TextXp = styled.Text`
+    color: #48A9E0;
+`;
 
-export const NormalText = styled.Text``;
+export const NormalText = styled.Text`
+    color: #666;
+`;

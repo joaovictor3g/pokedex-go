@@ -7,6 +7,7 @@ import { IconPerType } from '../IconPerType';
 import { ChallengeViewBox, ChallengeDescription, ChallengeTitle, ChallengeWrapper, ChallengeXp, TitleXp } from './styles';
  
 import { AntDesign } from '@expo/vector-icons';
+import { useChallengeContext } from '../../contexts/ChallengeContext';
 
 type ChallengeBoxProps = {
     id: number;
@@ -17,6 +18,8 @@ type ChallengeBoxProps = {
 };
 
 export function ChallengeBox(props: ChallengeBoxProps) {
+    const { levelUp } = useChallengeContext();
+
     return (
         <Swipeable
             overshootRight={false}
@@ -41,7 +44,7 @@ export function ChallengeBox(props: ChallengeBoxProps) {
                                 
                                 alignItems: 'center'
                             }}
-                            onPress={()=>{}}
+                            onPress={() => levelUp(props.amountXp)}
                         >
                             <AntDesign 
                                 name="checkcircleo" 

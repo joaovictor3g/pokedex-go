@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes } from './src/routes/tab.routes';
 import { ThemeProvider } from 'styled-components/native';
+import { ChallengesProvider } from './src/contexts/ChallengeContext';
 
 export interface Colors {
   theme: {
@@ -20,8 +21,10 @@ const globalColors = {
 
 export default function App() {
   return (
-    <ThemeProvider theme={globalColors}>
-      <Routes />
-    </ThemeProvider>
+    <ChallengesProvider>
+      <ThemeProvider theme={globalColors}>
+        <Routes />
+      </ThemeProvider>
+    </ChallengesProvider>
   );
 }

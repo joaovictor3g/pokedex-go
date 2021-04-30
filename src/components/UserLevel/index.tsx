@@ -1,17 +1,39 @@
 import React from 'react';
-import { LevelContainer, LevelNumber, ProgressContainer, Progress, Title } from './styles';
+import { View } from 'react-native';
+import { useChallengeContext } from '../../contexts/ChallengeContext';
+import { LevelContainer, LevelNumber, ProgressContainer, Progress, Title, IncrementedProgress, TextXp, NormalText } from './styles';
 
 export function UserLevel() {
+    const { amount_xp: amountXp, level, experienceToNextLevel } = useChallengeContext(); 
+    const barIncrementWidth = (amountXp * 100)/experienceToNextLevel;
+    
     return (
         <LevelContainer>
             <Title>Level</Title>
 
             <ProgressContainer>
-                <LevelNumber>0</LevelNumber>
-                <Progress />
-                <LevelNumber>10</LevelNumber>
+                <LevelNumber>{level}</LevelNumber>
+                <Progress> 
+                    <IncrementedProgress 
+                        style={{
+                            width: `${barIncrementWidth}%`,
+                            backgroundColor: 'blue',
+                            borderRadius: 5
+                        }}
+                    />
+                </Progress>
+                <LevelNumber>{level + 1}</LevelNumber>
             </ProgressContainer>
-
+            <View
+                style={{
+                    flexDirection: 'row',
+                    // alignItems: 'center',
+                    justifyContent: 'center'
+                }}
+            >
+                <TextXp>{experienceToNextLevel} XP</TextXp>
+                <NormalText> PARA O LEVEL {level+1}</NormalText>
+            </View>
         </LevelContainer>
     );
 }

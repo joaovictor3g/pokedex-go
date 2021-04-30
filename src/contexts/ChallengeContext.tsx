@@ -1,11 +1,14 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
+import React,{ createContext, ReactNode, useContext, useState } from 'react';
 
 type ChallengerContextData = {
     id: number,
     title: string,
     description: string,
     challenge_type: string,
-    amount_xp: number
+    amount_xp: number;
+    level: number;
+    experienceToNextLevel: number;
+    levelUp: (xp: number) => void;
 };
 
 type ChallengerProviderProps = {
@@ -21,6 +24,14 @@ export function ChallengesProvider({ children }: ChallengerProviderProps) {
     const [challengeType, setChallengeType] = useState('');
     const [amountXp, setAmountXp] = useState(0);
 
+    const [level, setLevel] = useState(0);
+
+    const experienceToNextLevel = Math.pow((level+1)*4, 5)
+
+    function levelUp(xp: number) {
+        setAmountXp(xp);
+    }
+
     return (
         <ChallengesContext.Provider
             value={{
@@ -28,7 +39,10 @@ export function ChallengesProvider({ children }: ChallengerProviderProps) {
                 title,
                 description,
                 challenge_type: challengeType,
-                amount_xp: amountXp
+                amount_xp: amountXp,
+                experienceToNextLevel,
+                level,
+                levelUp
             }}
         >
             {children}
