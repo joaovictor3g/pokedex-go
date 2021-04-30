@@ -6,7 +6,7 @@ import { LevelContainer, LevelNumber, ProgressContainer, Progress, Title, Increm
 export function UserLevel() {
     const { amount_xp: amountXp, level, experienceToNextLevel } = useChallengeContext(); 
     const barIncrementWidth = (amountXp * 100)/experienceToNextLevel;
-    
+
     return (
         <LevelContainer>
             <Title>Level</Title>

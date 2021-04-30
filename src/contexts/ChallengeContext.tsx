@@ -9,6 +9,7 @@ type ChallengerContextData = {
     level: number;
     experienceToNextLevel: number;
     levelUp: (xp: number) => void;
+    incrementProgressStatus: (xp: number) => void;
 };
 
 type ChallengerProviderProps = {
@@ -26,10 +27,20 @@ export function ChallengesProvider({ children }: ChallengerProviderProps) {
 
     const [level, setLevel] = useState(0);
 
-    const experienceToNextLevel = Math.pow((level+1)*4, 5)
+    const experienceToNextLevel = Math.pow((level+1)*4, 2)
 
-    function levelUp(xp: number) {
-        setAmountXp(xp);
+    function incrementProgressStatus(xp: number) {
+        setAmountXp(amountXp + xp);
+
+        if(xp > experienceToNextLevel)
+            levelUp()
+        if(xp+amountXp > experienceToNextLevel) 
+            levelUp()
+    }
+
+    function levelUp() {
+        // if(amountXp+1===experienceToNextLevel) 
+            setLevel(level+1);
     }
 
     return (
@@ -42,7 +53,8 @@ export function ChallengesProvider({ children }: ChallengerProviderProps) {
                 amount_xp: amountXp,
                 experienceToNextLevel,
                 level,
-                levelUp
+                levelUp,
+                incrementProgressStatus
             }}
         >
             {children}

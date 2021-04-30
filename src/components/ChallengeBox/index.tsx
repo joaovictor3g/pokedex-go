@@ -18,7 +18,7 @@ type ChallengeBoxProps = {
 };
 
 export function ChallengeBox(props: ChallengeBoxProps) {
-    const { levelUp } = useChallengeContext();
+    const { incrementProgressStatus } = useChallengeContext();
 
     return (
         <Swipeable
@@ -44,7 +44,7 @@ export function ChallengeBox(props: ChallengeBoxProps) {
                                 
                                 alignItems: 'center'
                             }}
-                            onPress={() => levelUp(props.amountXp)}
+                            onPress={() => incrementProgressStatus(props.amountXp)}
                         >
                             <AntDesign 
                                 name="checkcircleo" 
