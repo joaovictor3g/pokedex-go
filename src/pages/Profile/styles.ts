@@ -41,11 +41,11 @@ export const ImageContainer = styled.View`
 `;
 
 export const ProfileImage = styled.Image`
-    width: 150px;
-    height: 150px;
+    width: 130px;
+    height: 130px;
     position: absolute;
-    top:30px;
-    /* border-radius: 100px; */
+    top:40px;
+    border-radius: 100px;
     border-width: 10px;
     border-color: #48A9E0; 
 `;

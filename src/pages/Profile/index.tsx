@@ -14,9 +14,9 @@ import {
 import { MaterialIcons, Foundation, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import challengesJSON from '../../../challenges.json';
-import { IconPerType } from '../../components/IconPerType';
 import { ScrollView, View } from 'react-native';
 import { ChallengeBox } from '../../components/ChallengeBox';
+import { UserLevel } from '../../components/UserLevel';
 
 export function Profile() {
     const challenges = challengesJSON;
@@ -56,30 +56,32 @@ export function Profile() {
                         style={{ alignItems: 'center' }}
                     >
                         <Foundation name="marker" size={20} color="black" />
-                        Ginásio de Kanto</Text>
+                        Ginásio de Kanto
+                    </Text>
+                    <UserLevel />
+            
+                    <ChallengesContainer>
+                        <ScrollView
+                            showsVerticalScrollIndicator={false}
+                            contentContainerStyle={{ width: '100%' }}
+                        >
+                            {challenges.map(challenge => (
+                                <View
+                                    key={challenge.id}
+                                    style={{ marginTop: 10 }}
+                                >
+                                    <ChallengeBox 
+                                        amountXp={challenge.amount_xp}
+                                        challengeType={challenge.challenge_type}
+                                        description={challenge.description}
+                                        id={challenge.id}
+                                        title={challenge.title}
+                                    />
+                                </View>
+                            ))}
 
-                        <ChallengesContainer>
-                            <ScrollView
-                                showsVerticalScrollIndicator={false}
-                                contentContainerStyle={{ width: '100%' }}
-                            >
-                                {challenges.map(challenge => (
-                                    <View
-                                        key={challenge.id}
-                                        style={{ marginTop: 10 }}
-                                    >
-                                        <ChallengeBox 
-                                            amountXp={challenge.amount_xp}
-                                            challengeType={challenge.challenge_type}
-                                            description={challenge.description}
-                                            id={challenge.id}
-                                            title={challenge.title}
-                                        />
-                                    </View>
-                                ))}
-
-                            </ScrollView>
-                        </ChallengesContainer>
+                        </ScrollView>
+                    </ChallengesContainer>
                 </Main>
             </Container>
             <Footer currentPage="profile"/>
