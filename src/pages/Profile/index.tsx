@@ -1,9 +1,26 @@
 import React from 'react';
 import { Footer } from '../../components/Footer';
-import { BackAndEditButtons, Container, EditButton, Header, ImageContainer, Main, ProfileImage, Text } from './styles';
-import { MaterialIcons, Foundation } from '@expo/vector-icons';
+import { 
+        BackAndEditButtons, 
+        ChallengesContainer, 
+        Container, 
+        EditButton, 
+        Header, 
+        ImageContainer, 
+        Main, 
+        ProfileImage, 
+        Text 
+    } from './styles';
+import { MaterialIcons, Foundation, MaterialCommunityIcons } from '@expo/vector-icons';
+
+import challengesJSON from '../../../challenges.json';
+import { IconPerType } from '../../components/IconPerType';
+import { ScrollView, View } from 'react-native';
+import { ChallengeBox } from '../../components/ChallengeBox';
 
 export function Profile() {
+    const challenges = challengesJSON;
+
     return (
         <>
             <Container>
@@ -40,6 +57,29 @@ export function Profile() {
                     >
                         <Foundation name="marker" size={20} color="black" />
                         Ginásio de Kanto</Text>
+
+                        <ChallengesContainer>
+                            <ScrollView
+                                showsVerticalScrollIndicator={false}
+                                contentContainerStyle={{ width: '100%' }}
+                            >
+                                {challenges.map(challenge => (
+                                    <View
+                                        key={challenge.id}
+                                        style={{ marginTop: 10 }}
+                                    >
+                                        <ChallengeBox 
+                                            amountXp={challenge.amount_xp}
+                                            challengeType={challenge.challenge_type}
+                                            description={challenge.description}
+                                            id={challenge.id}
+                                            title={challenge.title}
+                                        />
+                                    </View>
+                                ))}
+
+                            </ScrollView>
+                        </ChallengesContainer>
                 </Main>
             </Container>
             <Footer currentPage="profile"/>

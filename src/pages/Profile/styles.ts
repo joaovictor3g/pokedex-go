@@ -8,6 +8,7 @@ interface Text {
 
 export const Container = styled.View`
     flex: 1;
+    width: 100%;
 `;
 
 export const Header = styled.View`
@@ -49,9 +50,17 @@ export const ProfileImage = styled.Image`
     border-color: #48A9E0; 
 `;
 
-
-
 export const Main = styled.View`
     margin-top: 70px;
     align-items: center;
+    flex: 1;
 `;
+
+export const ChallengesContainer = styled.View`
+    flex: 1;
+    width: 100%;
+    padding: 20px;
+    margin-top: 10px;
+`;
+
+export const ChallengesScroll = styled.ScrollView``;

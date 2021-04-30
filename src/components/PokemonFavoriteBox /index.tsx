@@ -68,9 +68,6 @@ export function PokemonFavoriteBox({
     
     return(
         <Swipeable
-            containerStyle={{
-                
-            }}
             overshootLeft={false}
             overshootRight={false}
             renderLeftActions={()=>(

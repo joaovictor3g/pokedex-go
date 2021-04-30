@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "title": "Descoberta",
+        "description": "Conheceu 10 mais pokemons novos de tipos aleatórios.",
+        "challenge_type": "random",
+        "amount_xp": 280
+    },
+    {
+        "id": 2,
+        "title": "Descoberta eletrizante",
+        "description": "Conheceu mais 4 pokemons novos do tipo elétrico.",
+        "challenge_type": "electric",
+        "amount_xp": 400
+    },
+    {
+        "id": 3,
+        "title": "Descoberta quente",
+        "description": "Conheceu mais 4 pokemons novos do tipo fogo.",
+        "challenge_type": "fire",
+        "amount_xp": 400
+    }
+]
