@@ -19,7 +19,7 @@ interface TypeProps {
 
 interface PokemonProps {
     name: string;
-    types: TypeProps[];
+    id: number;
 };
 
 interface StatsProps {
@@ -205,7 +205,7 @@ export function PokemonDetail(){
                             <HeaderButton onPress={handleGoBack}>
                                 <Ionicons name="arrow-back" size={30} color="#fff" />
                             </HeaderButton>
-                            <HeaderButton disabled={isFavButtonClicked} onPress={handleAddPokemonToFavorite}>
+                            <HeaderButton  onPress={handleAddPokemonToFavorite}>
                                 <MaterialIcons name="favorite-border" size={30} color="#fff" />
                             </HeaderButton>
                         </BackFavButtonsView>

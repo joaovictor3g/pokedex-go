@@ -10,16 +10,22 @@ interface PokemonBoxProps {
 
 export const PokemonViewBox = styled.View<PokemonBoxProps>`
     width: 100%;
-    height: 120px;
+    height: 140px;
     background:${props => props.background ? props.background: "#666"};
     border-radius: 10px;
     padding: 10px;
 `;
 
 export const PokemonName = styled.Text<PokemonBoxProps>`
-    color: ${props => props.color ? props.color : '#fff'};
+    color: #666;
+    font-size: 18px;
+
+`;
+
+export const PokemonId = styled.Text`
     font-size: 18px;
     font-weight: bold;
+    color: #000;
 `;
 
 export const OutlineType = styled.View<PokemonBoxProps>`
@@ -35,6 +41,6 @@ export const OutlineType = styled.View<PokemonBoxProps>`
 export const PokemonImage = styled.Image<PokemonBoxProps>`
     position: absolute;
     right: 10px;
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
 `;

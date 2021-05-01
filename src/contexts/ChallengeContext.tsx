@@ -1,4 +1,5 @@
 import React,{ createContext, ReactNode, useContext, useState } from 'react';
+import { LevelUpModal } from '../components/LevelUpModal';
 
 type ChallengerContextData = {
     id: number,
@@ -24,23 +25,22 @@ export function ChallengesProvider({ children }: ChallengerProviderProps) {
     const [description, setDescription] = useState('');
     const [challengeType, setChallengeType] = useState('');
     const [amountXp, setAmountXp] = useState(0);
+    const [modalVisible, setModalVisible] = useState(false);
 
     const [level, setLevel] = useState(0);
 
-    const experienceToNextLevel = Math.pow((level+1)*4, 2)
+    const experienceToNextLevel = Math.pow((level+1)*4, 3)
 
     function incrementProgressStatus(xp: number) {
         setAmountXp(amountXp + xp);
 
-        if(xp > experienceToNextLevel)
-            levelUp()
         if(xp+amountXp > experienceToNextLevel) 
-            levelUp()
+            levelUp();
     }
 
     function levelUp() {
-        // if(amountXp+1===experienceToNextLevel) 
-            setLevel(level+1);
+        setLevel(level+1);
+        // setModalVisible(true);
     }
 
     return (
@@ -58,6 +58,7 @@ export function ChallengesProvider({ children }: ChallengerProviderProps) {
             }}
         >
             {children}
+            { modalVisible && <LevelUpModal />}
         </ChallengesContext.Provider>
     );
 }

@@ -22,12 +22,11 @@ export function UserLevel() {
                         }}
                     />
                 </Progress>
-                <LevelNumber>{level + 1}</LevelNumber>
+                <LevelNumber>{level+1}</LevelNumber>
             </ProgressContainer>
             <View
                 style={{
                     flexDirection: 'row',
-                    // alignItems: 'center',
                     justifyContent: 'center'
                 }}
             >

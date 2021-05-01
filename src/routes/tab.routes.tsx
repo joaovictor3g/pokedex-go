@@ -16,9 +16,9 @@ export function Routes(){
     return (
         <>
             <NavigationContainer>
-                <Tab.Navigator 
+                <Tab.Navigator
                     screenOptions={{ 
-                        tabBarVisible: false
+                        tabBarVisible: false,
                     }}>           
                     <Tab.Screen name="/" component={Login} />
                     <Tab.Screen name="/home" component={Home}/>

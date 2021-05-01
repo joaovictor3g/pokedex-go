@@ -47,7 +47,6 @@ export async function getPokemonsAddedToFavorites(): Promise<StoragePokemonProps
         if(response) {
             const pokemons = JSON.parse(response) as StoragePokemonProps;
 
-            // console.log(pokemons)
             return pokemons;
         }
 

@@ -85,7 +85,17 @@ export function Favorites() {
                         {pokemons.map((pokemon) => (
                             <View
                                 key={pokemon.name}
-                                style={{ marginBottom: 15 }}
+                                style={{ 
+                                    marginBottom: 15,
+                                    shadowColor: '#000',
+                                    shadowOffset: { 
+                                        width: 0, 
+                                        height: 2 
+                                    },
+                                    shadowOpacity: 0.8,
+                                    shadowRadius: 2,
+                                    elevation: 1, 
+                                }}
                             >
                                 <PokemonFavoriteBox 
                                     handleRemovePokemon={() => handleRemovePokemon(pokemon)}

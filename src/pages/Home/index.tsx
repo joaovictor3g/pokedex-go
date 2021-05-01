@@ -89,10 +89,6 @@ export function Home() {
     }
 
     const navigation = useNavigation();
-
-    // function handleOpenDrawerMenu() {
-    //     navigation.dispatch(DrawerActions.openDrawer());
-    // }
     
     return (
         <>
@@ -107,10 +103,6 @@ export function Home() {
                             Seu pokemon do dia
                         </HeaderDownText>
                     </View>
-                    {/* <TouchableOpacity onPress={handleOpenDrawerMenu}>
-                        <Ionicons name="menu" size={30} color="black" />
-                    </TouchableOpacity> */}
-
                 </Header>
 
                 { (uniqueDescription && types) ? (
@@ -164,14 +156,14 @@ export function Home() {
 
                             <View style={{ flexDirection: 'row' }}>
                                 { types.map(type => (
-                                    <TypeView key={type.type.name} color={colorType ? colorType : "#666"}>
+                                    <TypeView key={type.type.name} color={"#666"}>
                                         <IconPerType 
                                             name={type.type.name} 
                                             color="#000" 
                                             size={24} 
                                             handleChangeColor={handleChangeColor}
                                         />
-                                        <TypeViewText color={colorType ? colorType : "#666"}> 
+                                        <TypeViewText color={"#666"}> 
                                             {capitalizeFirstLetter(type.type.name)}
                                         </TypeViewText>
                                     </TypeView>

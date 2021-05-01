@@ -68,7 +68,11 @@ export function Profile() {
                             {challenges.map(challenge => (
                                 <View
                                     key={challenge.id}
-                                    style={{ marginTop: 10 }}
+                                    style={{ 
+                                        marginTop: 10,
+                                        alignItems: 'center',
+                                        justifyContent: 'center'
+                                    }}
                                 >
                                     <ChallengeBox 
                                         amountXp={challenge.amount_xp}

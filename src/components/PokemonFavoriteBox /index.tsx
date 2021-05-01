@@ -1,14 +1,13 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { PokemonViewBox, PokemonImage, PokemonName, OutlineType } from './styles';
+import { PokemonViewBox, PokemonImage, PokemonName, OutlineType, PokemonId } from './styles';
 import { RectButton } from 'react-native-gesture-handler';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 import { PokemonProps } from '../../pages/PokeList';
 import { IconPerType } from '../IconPerType';
 import api from '../../services/api';
-import { Feather, Ionicons } from '@expo/vector-icons';
+import { Feather, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
-import typesInJSON from '../../../types.json';
 import { Animated, View } from 'react-native';
 
 interface PokemonBoxProps {
@@ -79,7 +78,7 @@ export function PokemonFavoriteBox({
                         <RectButton
                             style={{
                                 width: 100,
-                                height: 120,
+                                height: 140,
                                 backgroundColor: "blue",
                                 
                                 borderRadius: 20,
@@ -105,7 +104,7 @@ export function PokemonFavoriteBox({
                         <RectButton
                             style={{
                                 width: 100,
-                                height: 120,
+                                height: 140,
                                 backgroundColor: "red",
                                 borderRadius: 20,
                                 justifyContent: 'center',
@@ -125,12 +124,18 @@ export function PokemonFavoriteBox({
                 width={width}
                 padding={padding}
                 imageSize={imageSize}
-            >         
+            >       
+
+                <PokemonId>
+                    N° {pokemon.id}
+                </PokemonId>  
                 <PokemonName
                     color={color}
-                >{capitalizeFirstLetter(pokemon.name)}</PokemonName>
-                
-                
+                >
+                    {capitalizeFirstLetter(pokemon.name)}
+                   
+                </PokemonName>
+                              
                 { types.map((type, idx: number) => (
                     <View
                         key={idx} 
@@ -156,6 +161,15 @@ export function PokemonFavoriteBox({
                     
                 )) }
                 
+                <MaterialCommunityIcons 
+                    name="pokeball" 
+                    size={100} 
+                    color="#6666" 
+                    style={{
+                        position: 'absolute',
+                        right: 30
+                    }} 
+                />
 
                 { index < 10 && <PokemonImage source={{ uri: `https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/00${index}.png`}} resizeMode="contain"/> }
                 { index >= 10 && index <100 && <PokemonImage source={{ uri: `https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/0${index}.png`}} resizeMode="contain"/> }

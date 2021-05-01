@@ -34,7 +34,7 @@ export function ChallengeBox(props: ChallengeBoxProps) {
                         <RectButton
                             style={{
                                 width: 100,
-                                height: 110,
+                                height: 120,
                                 backgroundColor: "green",
                                 
                                 borderRadius: 20,

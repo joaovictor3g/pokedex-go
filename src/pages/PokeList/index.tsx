@@ -4,11 +4,12 @@ import { Footer } from '../../components/Footer';
 import { SearchPokemon } from '../../components/SearchPokemon';
 import api from '../../services/api';
 import { Button, Container, GroupButton, PokemonContainer, Scroll, Search, TextButton, TypeContainer } from './styles';
-import { FlatList, ListRenderItem } from 'react-native';
+import { FlatList, ListRenderItem, View } from 'react-native';
 import { TypeList } from '../../components/TypeList';
 import typesInJSON from '../../../types.json';
 import { PokemonBox } from '../../components/PokemonBox';
 import { ActivityIndicator } from 'react-native';
+import { Loading } from '../../components/Loading';
 
 export interface PokemonProps {
     name: string;
@@ -27,21 +28,19 @@ export function PokeList() {
     const [pokemonSearched, setPokemonSearched] = useState('');
     const [limit, setLimit] = useState(8);
     const [offset, setOffset] = useState(0);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [colorType, setColorType] = useState('');
 
     const [isButtonSearchPressed, setIsButtonSearchPressed] = useState(false);
 
     async function renderPokemons() {
-        if(isLoading)  return;
         try {
-            setIsLoading(true);
             const response = await api.get(`/pokemon?offset=${offset}&limit=${limit}`)
         
             setPokemons([...pokemons, ...response.data.results]);
             
             setOffset(offset+limit);
-            // setLimit(limit+offset);
+
             setIsLoading(false);
             
             
@@ -64,11 +63,20 @@ export function PokeList() {
         
     }, []);
 
-    const Loading = () => {
-        if(!isLoading) 
-            return null;
-        return  <ActivityIndicator size="small" color="blue"/>
-    };
+
+    if(isLoading) {
+        return (
+            <View
+                style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }}
+            >
+                <Loading />
+            </View>
+        )
+    }
 
     return (
         <>
@@ -118,9 +126,14 @@ export function PokeList() {
                             keyExtractor={item => item.name}
                             onEndReached={renderPokemons}
                             onEndReachedThreshold={0.02}
-                            ListFooterComponent={Loading}
+                            ListFooterComponent={() => (
+                                <ActivityIndicator 
+                                    size="large" 
+                                    color="blue"    
+                                />
+                            )}
                             numColumns={2}
-
+                            showsVerticalScrollIndicator={false}
 
                         /> : 
                         <SearchPokemon pokemonSearched={pokemonSearched}/>}
