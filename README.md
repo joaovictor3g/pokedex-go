@@ -9,6 +9,7 @@ This project is an UI/UX design for Arlley Gomes. Using [PokeApi v2](https://pok
 - [Styled Components](https://styled-components.com/)
 - [Context API](https://pt-br.reactjs.org/docs/context.html)
 - [Axios](https://axios-http.com/)
+- [Expo Lottie](https://docs.expo.io/versions/latest/sdk/lottie/)
 
 # First demonstration
 <div align="center">
