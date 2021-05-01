@@ -14,7 +14,6 @@ export const Container = styled.View`
 
 export const Search = styled.TextInput`
     font-size: 18px;
-    width: 100%;
     text-align: center;
 `;
 

@@ -11,6 +11,8 @@ import { PokemonBox } from '../../components/PokemonBox';
 import { ActivityIndicator } from 'react-native';
 import { Loading } from '../../components/Loading';
 
+import { EvilIcons } from '@expo/vector-icons';
+
 export interface PokemonProps {
     name: string;
     url?: string;
@@ -81,15 +83,28 @@ export function PokeList() {
     return (
         <>
             <Container>
-                <Search 
-                    value={pokemonSearched} 
-                    onChangeText={value => setPokemonSearched(value)} 
-                    placeholder="Pesquisar"
+                <View
+                    style={{
+                        width: '100%',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}
+                >
+                    <Search 
+                        value={pokemonSearched} 
+                        onChangeText={value => setPokemonSearched(value)} 
+                        placeholder="Pesquisar"
 
-                />
-                <Button onPress={handleSearchPokemon}>
-                    <TextButton>ir</TextButton>
-                </Button>
+                    />
+                    <Button onPress={handleSearchPokemon}>
+                        <EvilIcons 
+                            name="search" 
+                            size={30} 
+                            color="#666"
+                        />
+                    </Button>
+                </View>
             
                 <GroupButton>
                     <Button 
