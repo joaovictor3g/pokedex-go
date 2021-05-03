@@ -8,8 +8,16 @@ export const Container = styled.View`
     flex: 1;
     align-items: center;
     padding-top: 40px;
-   
-    
+`;
+
+export const SearchContainer = styled.View`
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    /* border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px; */
+
 `;
 
 export const Search = styled.TextInput`
@@ -17,23 +25,13 @@ export const Search = styled.TextInput`
     text-align: center;
 `;
 
-export const GroupButton = styled.View`
-    margin-top: 20px;
-    flex-direction: row;
-    
-    justify-content:space-between;
-    width: 50%;
-`;
-
 export const Button = styled.TouchableOpacity<Button>`
     border-bottom-width: ${props => props.isSelected ? `${2}px`: 0};
 `;
 
-export const TextButton = styled.Text`
-    font-size: 18px;
-`;
 
 export const PokemonContainer = styled.View`
+    flex: 1;
     width: 100%;
     padding: 2%;
     flex-direction: row;
@@ -41,16 +39,4 @@ export const PokemonContainer = styled.View`
     align-items: center;
     flex-wrap: wrap;
     margin-top: 10px;
-    max-height: 80%;
-`;
-
-
-export const TypeContainer = styled.View`
-    width: 100%;
-    padding: 2%;
-    height: 100%;
-`;
-
-export const Scroll = styled.ScrollView`
-
 `;

@@ -87,7 +87,6 @@ export function PokemonBox({
                   marginTop: 5
               }}>
                    <IconPerType 
-                        
                         color={"#666"} 
                         name={type.type.name} 
                         size={20} 
