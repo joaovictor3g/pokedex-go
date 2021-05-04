@@ -13,7 +13,7 @@ This project is an UI/UX design for Arlley Gomes. Using [PokeApi v2](https://pok
 
 # First demonstration
 <div align="center">
-    <img src="./gifs/first-demo.gif" alt="demo" />
+    <img src="./assets/gifs/first-demo.gif" alt="demo" />
 </div>
 
 # Layout

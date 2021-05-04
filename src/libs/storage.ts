@@ -12,8 +12,6 @@ interface StoragePokemonProps {
 
 export async function savePokemon(pokemon: PokemonProps) {    
     try {
-        // await AsyncStorage.clear();
-
         let pokemons = {} as StoragePokemonProps;
         const response = await AsyncStorage.getItem('@pokedexgo:favorites');
         
@@ -32,8 +30,6 @@ export async function savePokemon(pokemon: PokemonProps) {
 
         await AsyncStorage.setItem('@pokedexgo:favorites', JSON.stringify(pokemons));
 
-        console.log(`${pokemon.name} salvo!`)
-
     } catch(err) {
         throw new Error(err);
     }
@@ -49,8 +45,6 @@ export async function getPokemonsAddedToFavorites(): Promise<StoragePokemonProps
 
             return pokemons;
         }
-
-        console.log('vazio')
 
         return {
             data: []
@@ -73,11 +67,8 @@ export async function removePokemonOfAsyncStorage(pokemon: PokemonProps) {
                 data: newPokemonList
             }
 
-            console.log(`${pokemon.name} apagado!`);
-
             await AsyncStorage.setItem('@pokedexgo:favorites', JSON.stringify(pokemons));
-            
-
+        
             return;
         }
     } catch(err) {

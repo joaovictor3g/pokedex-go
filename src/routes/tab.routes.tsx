@@ -8,7 +8,6 @@ import { PokeList } from '../pages/PokeList';
 import { Favorites } from '../pages/Favorites';
 import { Profile } from '../pages/Profile';
 import { PokemonDetail } from '../pages/PokemonDetail';
-import HomeDrawer from './drawer.routes';
 
 const Tab = createBottomTabNavigator();
 
