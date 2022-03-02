@@ -1,16 +1,16 @@
-import React from 'react';
-import { Routes } from './src/routes/tab.routes';
-import { ThemeProvider } from 'styled-components/native';
-import { ChallengesProvider } from './src/contexts/ChallengeContext';
+import React from "react";
+import { Routes } from "./src/routes/tab.routes";
+import { ThemeProvider } from "styled-components/native";
+import { ChallengesProvider } from "./src/contexts/ChallengeContext";
 
 export interface Colors {
   theme: {
-      red: string;
-      white: string;
-      gray: string;
-      blue: string;
-  }
-};
+    red: string;
+    white: string;
+    gray: string;
+    blue: string;
+  };
+}
 
 const globalColors = {
   red: "#EB5757",
