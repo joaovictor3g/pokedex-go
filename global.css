@@ -1,0 +1,29 @@
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css";
+@import "nativewind/theme";
+
+/*
+ * Dark mode follows the device setting (app.json "userInterfaceStyle": "automatic").
+ * There is no DOM on native, so the class-based `.dark` variant used on web doesn't apply here.
+ */
+
+@theme {
+  --color-brand: #eb5757;
+  --color-brand-dark: #c94444;
+  --color-accent: #48a9e0;
+  --color-success: #34c759;
+  --color-gold: #f4b400;
+
+  /* Light / dark surfaces */
+  --color-canvas: #f2f3f8;
+  --color-canvas-dark: #0e0f14;
+  --color-card: #ffffff;
+  --color-card-dark: #1b1c23;
+  --color-ink: #16171f;
+  --color-ink-dark: #f4f5fa;
+  --color-muted: #767987;
+  --color-muted-dark: #9a9dab;
+  --color-line: #e3e5ec;
+  --color-line-dark: #2a2b34;
+}

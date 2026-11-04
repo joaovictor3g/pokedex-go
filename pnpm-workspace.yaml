@@ -1,0 +1,7 @@
+allowBuilds:
+  # Both ship prebuilt binaries; only oxide needs its install step.
+  '@parcel/watcher': false
+  '@tailwindcss/oxide': true
+overrides:
+  # Nativewind v5 is tested against this version; newer ones can break global.css builds.
+  lightningcss: 1.30.1
