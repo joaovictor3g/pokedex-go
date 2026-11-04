@@ -2,14 +2,18 @@
 This project is an UI/UX design for Arlley Gomes. Using [PokeApi v2](https://pokeapi.co/docs/v2).
 
 ## 🚀 Techs
-- [React](https://pt-br.reactjs.org/)
-- [React Native](https://reactnative.dev/)
-- [Typescript](https://www.typescriptlang.org/)
-- [Expo](https://expo.io/)
+- [Expo SDK 58](https://expo.dev/) + [React Native](https://reactnative.dev/) + [TypeScript](https://www.typescriptlang.org/)
+- [React Navigation 7](https://reactnavigation.org/) (native stack + bottom tabs)
+- [TanStack Query](https://tanstack.com/query) for PokeAPI requests and caching
 - [Styled Components](https://styled-components.com/)
-- [Context API](https://pt-br.reactjs.org/docs/context.html)
-- [Axios](https://axios-http.com/)
-- [Expo Lottie](https://docs.expo.io/versions/latest/sdk/lottie/)
+- [expo-image](https://docs.expo.dev/versions/latest/sdk/image/) and [Lottie](https://docs.expo.dev/versions/latest/sdk/lottie/)
+
+## ▶️ Running
+```
+pnpm install
+pnpm start
+```
+Scan the QR code with Expo Go. Your Expo CLI login must match the account signed in to Expo Go.
 
 # First demonstration
 <div align="center">
